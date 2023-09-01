@@ -1,4 +1,4 @@
-# CTC Traders - Technical Interface Specification
+# EMCS - Technical Interface Specification
 
 ## Getting started
 
