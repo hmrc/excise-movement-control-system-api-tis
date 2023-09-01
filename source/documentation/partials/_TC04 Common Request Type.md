@@ -1,0 +1,137 @@
+## TC04
+<table>
+ <tr>
+  <th>
+   TC04 Common Request Type
+  </th>
+  <td>
+   n1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+   Used for attribute HEADER.Request type assigned code on the IE701 message.
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   (reserved)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   Request for reference data
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   (reserved)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   (reserved)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   5
+  </td>
+  <td>
+   Request for re-synchronisation of the register of economic operators
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   6
+  </td>
+  <td>
+   Request for retrieval of a list of e-ADs/e-SADs
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   7
+  </td>
+  <td>
+   Request for SEED statistics
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   8
+  </td>
+  <td>
+   Request for retrieval of a list of e-ADs
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   9
+  </td>
+  <td>
+   Request for retrieval of a list of e-SADs
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

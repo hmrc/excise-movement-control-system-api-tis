@@ -1,57 +1,58 @@
-import csv
-import re
 import bs4 as bs
-import os
+import json
 
-def format(text):
-    return text.replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>').replace('•', '- ')
+filename='q2.html'
 
-prefixes = ['b','c','e','g','r','s']
+# =============================================================================
+# Main
+# =============================================================================
+soup = bs.BeautifulSoup(open(filename).read(), features="html.parser")
+
 rules = []
 
-folder = os.getcwd()+'/../source/documentation/partials/'
-for filename in os.listdir(folder):
-    if filename.startswith("_IE") and filename.endswith(".md"):
-        soup = bs.BeautifulSoup(open(folder+filename).read(), features="html.parser")
-        # for a in soup.findAll('a', href=re.compile(r'rules.html#.*')):
-        for a in soup.findAll('a', href = re.compile(r'rules-.*')):
-            href = a['href']
-            rule = href.split('#')[1]
-            if rule not in rules:
-                rules.append(rule.upper())
-        #     href = href.replace('rules.html', f"rules-{rule[0]}.html")
-        #     a['href'] = href
-        #
-        # with open(filename, 'wt') as writer:
-        #     writer.write(str(soup))
+class Rule():
+	def __init__(self, row):
+		tds = row.findChildren('td')
+		self.name = self.content(tds[0])
+		self.description = self.content(tds[1])
 
-print(rules)
+	def toJSON(self):
+		return json.dumps(self, default=vars, indent=4)
 
-for prefix in prefixes:
-    with open(f"rules-{prefix}.html.md.erb", "wt") as writer:
-        writer.write(f"""---
-title: NCTS Phase 5 Technical Interface Specification
-weight: {prefixes.index(prefix)+5}
-description: Software developers, designers, product owners or business analysts. Integrate your software with the ERMIS service
----
-#Rules {prefix.upper()}
-Based on document version 5.15.0-v0.10 and issue date 04/03/2022
-<%= partial 'documentation/partials/rulesintro' %>
-""")
+	def asHTML(self):
+		html = bs.BeautifulSoup()
 
-with open('q2.csv', newline='') as csvfile:
-    reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-    for row in reader:
-        if row[0].isdigit():
-            id = row[1]
-            print(id)
-            if id in rules:
-                print(id)
-                prefix = id[0].lower()
-                with open(f"rules-{prefix}.html.md.erb", "at") as writer:
-                    writer.write(f"##{id}\n\n")
-                    writer.write(f"<b>Functional Description</b>\n\n")
-                    writer.write(f"{format(row[2])}\n\n")
-                    writer.write(f"<b>Technical Description</b>\n\n")
-                    writer.write(f"{format(row[3])}\n\n")
+		table = html.new_tag('table')
+		html.append(table)
+		tr = html.new_tag('tr')
+		table.append(tr)
+		th = html.new_tag('th')
+		tr.append(th)
+		th.string = self.name
+		td = html.new_tag('td')
+		tr.append(td)
+		td.string = self.description
+
+		return html.prettify()
+
+	def content(self, td):
+		text = td.text.strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\\n','\n<br/>')
+		return text
+
+h1 = soup.find(lambda tag: tag.name == "h1" and 'Rules' in tag.text)
+table = h1.find_next_sibling('table')
+trs = table.findChildren('tr')
+for tr in trs:
+	rule = Rule(tr)
+	rules.append(rule)
+	with open(f"_{rule.name}.md", "w") as file:
+		file.write(f"## {rule.name}\n{rule.asHTML()}")
+
+doc = f"---\ntitle: EMCS Rules\nweight: 5\ndescription: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service\n---\n"
+doc = doc + f"#Rules\n"
+for rule in rules:
+    doc = doc + f"<%= partial 'documentation/partials/{rule.name}' %>\n"
+
+with open("rules.html.md.erb", "w") as file:
+	file.write(doc)
 

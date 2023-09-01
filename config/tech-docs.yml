@@ -3,9 +3,8 @@ host: docs.developer.service.hmrc.gov.uk
 
 # Header-related options
 show_govuk_logo: true
-service_name: Ecxise Movement ControlSystem API Technical Interface Specification
-service_link: /guides/excise-movement-control-system-api-tis
-phase: Beta
+service_name: EMCS Technical Interface Specification
+service_link: excise-movement-control-system-tis
 
 # Links to show on right-hand-side of header
 header_links:
@@ -18,7 +17,6 @@ header_links:
 enable_search: false
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
-# todo: this may need to change
 ga_tracking_id: UA-43414424-1
 
 # Enables the tracking consent banner

@@ -1,10 +1,25 @@
 ---
-title: Excise Movement Control System Api Technical Interface Specification
+title: NCTS Phase 5 Technical Interface Specification
 weight: 3
 description: Software developers, designers, product owners or business analysts. Integrate your software with the ERMIS service
 ---
 
 # Process flows
+
+## Functional errors
+
+It should be noted that the following messages are used to report functional errors:
+
+- Rejection from Office of Departure (IE056: E_DEP_REJ);
+- Rejection from Office of Destination (IE057: E_DES_REJ).
+
+A functional error occurs in the following circumstances:
+
+- missing required data from an IE message
+- IE message completed incorrectly
+- missing data group(s)
+- data item(s) violates a code list
+- out of sequence message(s).
 
 ## Pre-lodgement message flows
 
@@ -71,9 +86,6 @@ This scenario involves the holder of the transit procedure making corrections to
     - **No** (no control): Go to step 6.
 1. The office of departure receives a valid ‘Presentation Notification for the Pre-Lodged Declaration’ E_PRE_NOT (IE170) message from the holder of the transit procedure.
 1. The MRN is communicated to the holder of the transit procedure with message ‘MRN Allocated’ E_MRN_ALL (IE028).
-   
-    Further amendments may be made to the declaration by using the ‘Declaration Amendment’ E_DEC_AMD (IE013) message after the MRN is allocated with the ‘MRN Allocated’ E_MRN_ALL (IE028) message but before the ‘Release for Transit’ E_REL_TRA (IE029) message is sent. For more information, see [Declaration amendment accepted/rejected](#declaration-amendment-accepted-rejected).
-    
 1. The ‘Release for Transit’ E_REL_TRA (IE029) message is sent to the holder of the transit procedure.
 1. The departure process ends.
 
@@ -418,14 +430,14 @@ This scenario outlines how major discrepancies found during control at the offic
 
 ### Recovery process
 
-This scenario shows the recovery process for non-arrival of goods or when the goods are under recovery because of major discrepancies.
+This scenario shows the recovery process for non-arrival of goods.
 
 <img src="../figures/recovery_process.svg" alt="Recovery initiation on incident occurrence message flow. Flow is described in this section." />
 
 <a href="../figures/recovery_process.svg" target="_blank">Open the diagram in a new tab.</a>
 
 1. The process starts when the ‘Release for Transit’ E_REL_TRA (IE029) message is sent to the holder of the transit procedure.
-1. If the goods have not arrived within seven months of the arrival date or if the goods have been placed in recovery because of major discrepancies, the competent authority of recovery at departure notifies the holder of the transit procedure with the ‘Recovery Notification’ E_REC_NOT (IE035) message.
+1. The competent authority of recovery at departure notifies the holder of the transit procedure with the ‘Recovery Notification’ E_REC_NOT (IE035) message.
 1. The ‘Write-off Notification’ E_WRT_NOT (IE045) message is sent to the holder of the transit procedure.
 1. The transit movement ends.
 
@@ -460,3 +472,5 @@ own guarantees even though no MRN may have been allocated to the transit movemen
 1. The JSON guarantee balance request is converted internally to an appropriate ‘Query on Guarantees’ E_GUA_QUE (IE034) message, which is sent to the Guarantee Management System. 
 1. The Guarantee Management System replies back internally with the ‘Response Query on Guarantees’ E_GUA_RSP (IE037) message.
 1. The ‘Response Query on Guarantees’ E_GUA_RSP (IE037) message is converted internally to a JSON guarantee balance response, which is sent to the holder of the transit procedure.
+
+

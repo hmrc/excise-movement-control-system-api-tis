@@ -1,0 +1,77 @@
+## TC24
+<table>
+ <tr>
+  <th>
+   TC24 Modification Type
+  </th>
+  <td>
+   a1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+   Used for (multiple) attribute Operation.
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   C
+  </td>
+  <td>
+   Create
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   D
+  </td>
+  <td>
+   Delete
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   I
+  </td>
+  <td>
+   Invalidate
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   U
+  </td>
+  <td>
+   Update
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

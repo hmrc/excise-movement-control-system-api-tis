@@ -1,4 +1,4 @@
-# Excise Movement Control System API - Technical Interface Specification
+# EMCS - Technical Interface Specification
 
 ## Getting started
 

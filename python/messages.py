@@ -3,183 +3,145 @@ import re
 import copy
 import itertools
 import utils
+import json
 
-class MessageSection():
+class MessageType():
 
-    def __init__(self, messageType):
-        self.messageType = messageType
-        print(f"Processing message: {messageType}")
+    def __init__(self, messageTypeTag):
+        self.name = messageTypeTag.text[:5]
+        self.number = int(self.name[-3:])
+        self.code = re.findall(r'\(.*?\)', messageTypeTag.text)[0].strip("()") 
+        self.description = re.findall(r'\-.*?\(', messageTypeTag.text)[0].strip("-( ") 
+        print(f"Processing message: {self.name}")
 
-    # Process a single message type ====
-    def process(self, messageTypeTag):
-        htmlString = ""
-        html = bs.BeautifulSoup()
-        tag = messageTypeTag.find_next_sibling()
+        self.headers = self.extractHeaders(messageTypeTag)
 
-        while tag is not None and not tag.name == 'h1':
-            self.processMessageTypeTags(tag, html)
-            tag = tag.find_next_sibling()
+    def extractHeaders(self, messageTypeTag):
+        headers = []
+        headerTable = messageTypeTag.find_next('table')
+        for row in headerTable.find_all('tr'):
+            data = row.find_all('td')
+            header = Header(data)
+            headers.append(header)
+            header.fields.extend(self.extractFields(headerTable, header.name))
 
-        utils.joinTables(html)
-        utils.swapRepeatMandatory(html.findAll('table')[1])
-        utils.singleStructure(html)
-        utils.fixRules(html)
-        utils.rulesToLinks(html)
-        utils.indent(html)
+            print(header.toJSON())
+        return headers
 
-        code = utils.insertHeadings(html)
-        messageName = utils.getMessageName(html)
-
-        if code.startswith('CC'):
-            #remove second table for Tranche 3 docs release
-            # html.findAll("table")[1].extract()
-            htmlString = f"## {self.messageType} {messageName.title()}\n{html.prettify()}"
-
-        return htmlString
-
-    def processMessageTypeTags(self, tag, html):
-        if tag.name == 'p' and tag.text.strip() != '':
-            table = self.convertPtoTable(tag, html)
-            html.append(table) if table else None
-                
-        elif tag.name == 'h2':
-            table = self.convertH2toTable(tag, html)
-            html.append(table) if table else None
-                    
-        elif tag.name == 'table':
-            html.append(self.tidyTable(copy.copy(tag), html)) if not self.isPageHeaderTable(tag) else None
-
-    def isPageHeaderTable(self,table):
-        return table.find('td').text.startswith('DDNTA for NCTS')
-
-    def tidyMultiplePs(self, table, soup):
-        for tr in table.findAll('tr'):
-            tds = tr.findAll('td')
-            length = len(tds[0].findAll('p')) if len(tds) > 1 else 0
-                
-            if length > 1:
-                for i in reversed(range(length)):
-                    newtr = soup.new_tag('tr')
-                    tr.insert_after(newtr)
-                    [self.tidyParagraphs(soup, td, i, newtr) for td in tds]
-                tr.extract()
-
-    def tidyParagraphs(self, soup, td, i, newtr):
-        newtd = soup.new_tag('td')
-        ps = td.findAll('p')
-        newtd.string = ps[i].text if len(ps) > i else ""
-        newtr.append(newtd)
-
-    def splitColspan(self, table, soup):
-        colspanCells = lambda tag: tag.name == "td" and len(tag.attrs) >= 1 and tag.has_attr("colspan")
-        for td in table.findAll(colspanCells):
-            count = int(td.get("colspan"))
-            td['colspan'] = 1
-            [td.insert_after(soup.new_tag('td')) for i in range(count-1)]
-
-        rowspanCells = lambda tag:tag.name == "td" and len(tag.attrs) >= 1 and tag.has_attr("rowspan")
-
-        for td in table.findAll(rowspanCells):
-            td['rowspan'] = 1
-
-    def tidyTable(self,table, soup):
-    #     - multiple p tags in a single td to multiple rows
-        self.tidyMultiplePs(table, soup)
-    #     - orphaned rules to row above
-    #     - split colspan tds
-        self.splitColspan(table, soup)
-        return table
-
-    def convertH2toTable(self, h2, soup):
-        name = h2.text
-        table = soup.new_tag('table')
-        tr = soup.new_tag('tr')
-        table.append(tr)
-        td = soup.new_tag('td')
-        td.string = name
-        tr.append(td)
-
-        itertools.repeat(tr.append(soup.new_tag('td')), 4)
-
-        return table
-
-    def findMandatoryIndex(self, elements):
-        for i in range(len(elements)):
-            if re.match("^(M|O|R)$", elements[i]):
-                return i
-
-    def findRepeatableIndex(self, elements):
-        for i in range(len(elements)):
-            if re.match("(.*)x", elements[i]):
-                return i
-
-    def createTableCell(self, soup, tr, details, prop):
-        td = soup.new_tag('td')
-        td.string = details[prop]
-        tr.append(td)
-
-    def createDetailsA(self, elements, index): 
-        return {
-            'name': ' '.join(elements[0:index]).strip(),
-            'repeat': elements[index],
-            'mandatory': '' if len(elements) <= index+1 else elements[index+1],
-            'rules': '' if len(elements) <= index+2 else ' '.join(elements[index+2:])
-        }
-
-    def createDetailsB(self, elements, index): 
-        return {
-            'name': ' '.join(elements[0:index]).strip(),
-            'mandatory': elements[index],
-            'format': elements[index+1],
-            'rules': '' if len(elements) < index+3 else ' '.join(elements[index+2:])
-        }
-
-    def convertPTOTableA(self, soup, elements, index):
-        table = soup.new_tag('table')
-        tr = soup.new_tag('tr')
-        table.append(tr)
-
-        details = self.createDetailsA(elements, index)
-
-        self.createTableCell(soup, tr, details, 'name')
-        self.createTableCell(soup, tr, details, 'repeat')
-        self.createTableCell(soup, tr, details, 'mandatory')
-        self.createTableCell(soup, tr, details, 'rules')
-
-        return table
-
-    def convertPTOTableB(self, soup, elements, index):
-        table = soup.new_tag('table')
-        tr = soup.new_tag('tr')
-        table.append(tr)
-
-        details = self.createDetailsB(elements, index)
-
-        td = soup.new_tag('td')
-        tr.append(td)
-        p = soup.new_tag('p')
-        p['class'] = 's5'
-        p.string = details['name']
-        td.append(p)
-
-        self.createTableCell(soup, tr, details, 'mandatory')
-        self.createTableCell(soup, tr, details, 'format')
-        self.createTableCell(soup, tr, details, 'rules')
-
-        tr.append(soup.new_tag('td'))
-        return table
-
-
-    def convertPtoTable(self, p, soup):
-        elements = [a for a in p.text.split(' ') if a != '']
-        index = self.findRepeatableIndex(elements)
-        if index:
-            return self.convertPTOTableA(soup, elements, index)
+    def extractFields(self, headerTable, name):
+        h = headerTable.find_next_sibling(lambda tag: tag.name == 'p' and tag.text == name)
+        fields = []
+        if h is not None:
+            p = h.find_next()
+            spans = p.findChildren('span')
+            while len(spans) > 0 and p.attrs['class'][0] in {'P29', 'P30'}:
+                if p.attrs['class'][0] == 'P29':
+                    fields.append(Field(spans))
+                else:
+                    fields[-1].addRule(spans)
+                p = p.find_next_sibling()
+                spans = p.findChildren('span')
         else:
-            index = self.findMandatoryIndex(elements)
-            if index:
-                return self.convertPTOTableB(soup, elements, index)
+            print(f"unable to extract details for {name}")
+        return fields
 
-        
+    def asHTML(self):
+        html = bs.BeautifulSoup()
+
+        ## Titile table
+        table = html.new_tag('table')
+        html.append(table)
+        tr = html.new_tag('tr')
+        table.append(tr)
+        createTableHeader(html, tr, "Message Type")
+        createTableHeader(html, tr, "Name")
+        createTableHeader(html, tr, "Code")
+        tr = html.new_tag('tr')
+        table.append(tr)
+        createTableHeader(html, tr, self.name)
+        createTableHeader(html, tr, self.description)
+        createTableHeader(html, tr, self.code)
+
+        ## Details table
+        table = html.new_tag('table')
+        html.append(table)
+        tr = html.new_tag('tr')
+        table.append(tr)
+        createTableHeader(html, tr, "Field Name")
+        createTableHeader(html, tr, "Priority")
+        createTableHeader(html, tr, "Format / Max Repeat")
+        createTableHeader(html, tr, "Rules")
+        for header in self.headers:
+            tr = html.new_tag('tr')
+            table.append(tr)
+            level = int(header.name.count('-')/3)
+            createTableData(html, tr, header.name.replace('---','- '))
+            createTableData(html, tr, header.mandatory)
+            createTableData(html, tr, header.repeats)
+            createRules(html, tr, header.rules.split(' '))
+            for field in header.fields:
+                tr = html.new_tag('tr')
+                table.append(tr)
+                createTableData(html, tr, ('- '*(level+1))+field.name)
+                createTableData(html, tr, field.mandatory)
+                createTableData(html, tr, field.format)
+                createRules(html, tr, field.rules)
+
+        return html.prettify()
 
 
+class Header():
+    def __init__(self, data):
+        self.name = data[0].text.strip()
+        self.repeats = data[1].text.strip()
+        self.mandatory = data[2].text.strip()
+        self.rules = data[3].text.strip()
+        self.fields = []
+
+    def toJSON(self):
+        return json.dumps(self, default=vars, indent=4)
+
+class Field():
+    def __init__(self, data):
+        self.name = data[0].text.strip()
+        self.mandatory = data[1].text.strip()
+        self.format = data[2].text.strip()
+        self.rules = data[3].text.strip().split(' ')
+        self.rules.extend(data[4].text.strip().split(' '))
+        while('' in self.rules):
+            self.rules.remove('')
+
+    def addRule(self, data):
+        self.rules.extend(data[0].text.strip().split(' '))
+
+def createTableHeader(html, tr, title):
+    td = html.new_tag('th')
+    td.string = title
+    tr.append(td)
+
+def createTableData(html, tr, data):
+    td = html.new_tag('td')
+    td.string = data
+    tr.append(td)
+
+def createRules(html, tr, rules):
+    td = html.new_tag('td')
+    tr.append(td)
+    data = ''
+    for rule in rules:
+        if rule.strip().startswith('BR'):
+            a = html.new_tag('a', href=f"business-rules.html#{rule.lower()}")
+            a.string = rule
+            td.append(a)
+        elif rule.strip().startswith('R') or rule.strip().startswith('TR'):
+            a = html.new_tag('a', href=f"rules.html#{rule.lower()}")
+            a.string = rule
+            td.append(a)
+        elif rule.strip().startswith('TC'):
+            a = html.new_tag('a', href=f"technical-codelists.html#{rule.lower()}")
+            a.string = rule
+            td.append(a)
+        else:
+            span = html.new_tag('span')
+            span.string = rule
+            td.append(span)
