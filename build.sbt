@@ -1,6 +1,4 @@
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
-
-val appName = "ctc-traders-phase5-tis"
+val appName = "excise-movement-control-sustem-tis"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
@@ -14,9 +12,6 @@ lazy val microservice = Project(appName, file("."))
       "-Wconf:src=routes/.*:silent",
       "-feature"
     )
-  )
-  .settings(
-    publishingSettings: _*
   )
   .settings(
     resolvers += Resolver.bintrayRepo("hmrc", "releases"),
