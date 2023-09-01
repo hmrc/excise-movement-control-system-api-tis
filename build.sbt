@@ -1,18 +1,24 @@
-import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
+import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
-lazy val microservice = Project("excise-movement-control-system-api-tis", file("."))
-  .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
+val appName = "ctc-traders-phase5-tis"
+
+lazy val microservice = Project(appName, file("."))
+  .enablePlugins(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
   .settings(
-    majorVersion        := 0,
-    scalaVersion        := "2.13.8",
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
-    // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
-    // suppress warnings in generated routes files
-    scalacOptions += "-Wconf:src=routes/.*:s",
-    scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s",
-    pipelineStages := Seq(gzip),
+    update / evictionWarningOptions := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
+    majorVersion := 0,
+    scalaVersion := "2.12.15",
+    scalacOptions ++= Seq(
+      "-Xfatal-warnings",
+      "-Wconf:src=routes/.*:silent",
+      "-feature"
+    )
   )
-  .configs(IntegrationTest)
-  .settings(integrationTestSettings(): _*)
-  .settings(resolvers += Resolver.jcenterRepo)
-  .settings(CodeCoverageSettings.settings: _*)
+  .settings(
+    publishingSettings: _*
+  )
+  .settings(
+    resolvers += Resolver.bintrayRepo("hmrc", "releases"),
+    resolvers += Resolver.jcenterRepo
+  )

@@ -1,3 +1,4 @@
-# Add all the application routes to the app.routes file
-->         /excise-movement-control-system-api-tis              app.Routes
-->         /                          health.Routes
+->      /                                                  health.Routes
+GET     /guides/ctc-traders-phase5-tis           controllers.Default.redirect(to = "/guides/ctc-traders-phase5-tis/")
+GET     /guides/ctc-traders-phase5-tis/          controllers.Assets.at(path="/public", file="index.html")
+GET     /guides/ctc-traders-phase5-tis/*file     controllers.Assets.at(path="/public", file)
