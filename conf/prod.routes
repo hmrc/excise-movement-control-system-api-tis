@@ -1,4 +1,4 @@
 ->      /                                                  health.Routes
-GET     /guides/excise-movement-control-sustem-tis           controllers.Default.redirect(to = "/guides/excise-movement-control-sustem-tis/")
-GET     /guides/excise-movement-control-sustem-tis/          controllers.Assets.at(path="/public", file="index.html")
-GET     /guides/excise-movement-control-sustem-tis/*file     controllers.Assets.at(path="/public", file)
+GET     /guides/excise-movement-control-system-tis           controllers.Default.redirect(to = "/guides/excise-movement-control-system-tis/")
+GET     /guides/excise-movement-control-system-tis/          controllers.Assets.at(path="/public", file="index.html")
+GET     /guides/excise-movement-control-system-tis/*file     controllers.Assets.at(path="/public", file)

@@ -1,4 +1,4 @@
-# Excise Movement Control Sustem  - Technical Interface Specification
+# Excise Movement Control System  - Technical Interface Specification
 
 ## Getting started
 

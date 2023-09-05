@@ -1,4 +1,4 @@
-val appName = "excise-movement-control-sustem-tis"
+val appName = "excise-movement-control-system-tis"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
