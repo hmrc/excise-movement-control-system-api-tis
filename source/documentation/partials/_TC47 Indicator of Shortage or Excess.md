@@ -1,0 +1,53 @@
+## TC47
+<table>
+ <tr>
+  <th>
+   TC47 Indicator of Shortage or Excess
+  </th>
+  <td>
+   a1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+   Used for attribute Indicator of Shortage or Excess.Used for attribute REPORT OF RECEIPT/EXPORT BODY.Indicator of Shortage or Excess.
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   E
+  </td>
+  <td>
+   Excess
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   S
+  </td>
+  <td>
+   Shortage
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

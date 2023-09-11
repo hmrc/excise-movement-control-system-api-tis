@@ -1,0 +1,84 @@
+## TC18
+<table>
+ <tr>
+  <th>
+   TC18 Customs Rejection Reason Code
+  </th>
+  <td>
+   n1
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   Import data not found
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   The content of the e-AD does not match with import data
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   Export data not found
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   The content of the e-AD does not match with export data
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   5
+  </td>
+  <td>
+   Goods are rejected at export procedure
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>
