@@ -5,6 +5,7 @@ host: docs.developer.service.hmrc.gov.uk
 show_govuk_logo: true
 service_name: EMCS Technical Interface Specification
 service_link: excise-movement-control-system-tis
+phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
@@ -14,7 +15,7 @@ header_links:
   Support: /developer/support
 
 # Enables search functionality. This indexes pages only and is not recommended for single-page sites.
-enable_search: false
+enable_search: true
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-43414424-1
