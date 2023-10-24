@@ -5,8 +5,9 @@ from datetime import datetime
 
 filename='q2.html'
 validMessageTypes = [
-'IE810','IE813','IE818','IE819','IE825','IE837','IE871',
-'IE704','IE801','IE802','IE803','IE807','IE829','IE839','IE840','IE881','IE905'
+'IE704', 'IE801', 'IE802', 'IE803', 'IE807', 'IE810','IE813', 'IE815',
+'IE818', 'IE819', 'IE825','IE829', 'IE837', 'IE839', 'IE840', 'IE871',
+'IE881', 'IE905'
 ]
 
 def getIssueDate(soup):
