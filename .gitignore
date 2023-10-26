@@ -38,3 +38,4 @@ test-result
 tmp
 .vscode/
 vendor/
+python/__pycache__
