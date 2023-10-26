@@ -39,3 +39,4 @@ tmp
 .vscode/
 vendor/
 python/__pycache__
+/public/

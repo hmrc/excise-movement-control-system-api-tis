@@ -1,6 +1,6 @@
 import sbt.Keys._
 
-val appName = "excise-movement-control-system-tis"
+val appName = "excise-movement-control-system-api-tis"
 
 scalaVersion := "2.13.8"
 
