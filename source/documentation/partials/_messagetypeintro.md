@@ -11,13 +11,13 @@ Message type details are as follows:
     - optional (O: Optional), or 
     - conditional (D: Dependent).
 - Data group nesting is shown with dashes, which means that a data group may contain not only data items but also other groups of data. 
-- Links to applicable NCTS code lists. Each link downloads a zip file from a separate non-HMRC site. The code lists are updated regularly. Consider setting up an automated way to download the files regularly and integrate them with your software.
+- Links to applicable EMCS code lists. Each link downloads a zip file from a separate non-HMRC site. The code lists are updated regularly. Consider setting up an automated way to download the files regularly and integrate them with your software.
 - Links to applicable rules and conditions. 
 - Header elements (XML fields that can contain other XML fields) are highlighted in **bold**.
 
 ## Accessing the XML schemas
 
-The XML schemas are available for download [here](https://github.com/hmrc/transit-movements-validator/tree/main/conf/xsd).
+You can [download the XML schemas on GitHub](https://github.com/hmrc/excise-movement-control-system-api/tree/main/app/xsd).
 
 You can view the XML schema for a particular message type as follows:
 
