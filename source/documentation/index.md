@@ -31,9 +31,9 @@ It allows the exchange of secure online messages containing specific consignment
 
 The TIS should be read with the following related documentation: 
 
-- [API specification]()
-- [Service guide]()
-- [Testing guide]()
+- [API specification](/api-documentation/docs/api/service/excise-movement-control-system-api/1.0/oas/page)
+- [Service guide](/guides/emcs-api-service-guide/)
+- [Testing guide](/guides/emcs-api-testing-guide/)
 
 ## Changelog
 
