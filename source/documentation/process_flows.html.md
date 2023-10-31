@@ -1,6 +1,6 @@
 ---
 title: EMCS API process flows
-weight: 3
+weight: 2
 description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
 ---
 
