@@ -4,7 +4,7 @@ host: developer.service.hmrc.gov.uk
 # Header-related options
 show_govuk_logo: true
 service_name: EMCS Technical Interface Specification
-service_link: excise-movement-control-system-api-tis
+service_link: /guides/excise-movement-control-system-api-tis/
 phase: Beta
 
 # Links to show on right-hand-side of header
