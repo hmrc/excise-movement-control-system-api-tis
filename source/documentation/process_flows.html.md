@@ -6,7 +6,7 @@ description: Software developers, designers, product owners or business analysts
 
 # Process flows
 
-![A high level process map for EMCS API](/images/emcs-api-high-level-process-map.png)
+![A high level process map for EMCS API](images/emcs-api-high-level-process-map.png)
 
 Detailed process flows for the new RESTful API are still in development.
 
