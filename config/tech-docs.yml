@@ -23,7 +23,7 @@ enable_search: true
 # Enables the tracking consent banner
 tracking_consent_frontend:
   url: /tracking-consent/tracking.js
-  gtm_container: b
+  gtm_container: d
 
 # Enable multipage navigation in the sidebar
 multipage_nav: true
