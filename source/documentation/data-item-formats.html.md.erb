@@ -7,13 +7,21 @@ description: Software developers, designers, product owners or business analysts
 <%= partial 'documentation/partials/google_tag_manager_js' %>
 Every Data Item within a Common Domain Exchange can be one of the following:
 
-- numeric
-- alphanumeric
-- text field
+- numeric (n)
+- alphanumeric (an)
+- text field (a)
 - dateTime
 - date
 - time
-- binary data. 
+- binary data
+
+A field may be defined with a certain number of characters. `..` is used to mean 'up to'. 
+
+For example: 
+
+-	`a2` refers to a text field of exactly 2 characters
+-	`an..32` refers to an alphanumeric value up to 32 characters in length.
+
 
 This page defines the conventions used for the Data Item formats when present in the Common Domain. The Data Item conventions on this page are not part of the Syntactic layer validations, except for those incorporated in [EMCS XSDs](https://github.com/hmrc/excise-movement-control-system-api/tree/main/app/xsd). It is the responsibility of the application sending message exchanges over the Common Domain (NEA and CDEA) to conform to the Data Item conventions defined on this page.
 
