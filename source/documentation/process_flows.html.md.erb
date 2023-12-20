@@ -5,12 +5,152 @@ description: Software developers, designers, product owners or business analysts
 ---
 
 # Process flows
+
+## High level process flow
 <%= partial 'documentation/partials/google_tag_manager_js' %>
 <a href="../images/emcs-api-high-level-process-map.png" target="_blank"><img src="../images/emcs-api-high-level-process-map.png" alt="A high level process map for EMCS API"></a>
 <a href="../images/emcs-api-high-level-process-map.png" target="_blank">Open high level process map in a new tab.</a>
 
-Detailed process flows for the new RESTful API are still in development.
+This process flow describes the EMCS API from a high level perspective.
 
-As the functionality of the API remains similar to the SOAP API, you should use the [process flows in the existing DDNEA documentation](https://www.gov.uk/government/publications/emcs-functional-stage-31-fs31-technical-specifications). 
+## Detailed process flows
 
-Ignore any references to SOAP or SOAP envelopes, the new API is RESTful.
+The following process flow diagrams describe the flow of messages between actors (such as consignors or consignees) and Member State Administration (MSA) systems in certain scenarios.
+
+<a href="../images/legend.png" target="_blank"><img src="../images/legend.png" alt="A legend for the detailed process maps for EMCS API"></a>
+<a href="../images/legend.png" target="_blank">Open detailed process map legend in a new tab.</a>
+
+Outgoing messages are shown in orange. Incoming messages are shown in pink. Movement statuses are shown in green. Timers are shown in purple. Actors appear in a green column. Systems appear in a grey column.
+
+Arrows are used to indicate the direction in which messages flow.
+
+## Origin is a tax warehouse & destination is known
+
+<a href="../images/1-Origin-is-a-tax-warehouse-&-destination-is-known.png" target="_blank"><img src="../images/1-Origin-is-a-tax-warehouse-&-destination-is-known.png" alt="A process map describing a scenario where the origin is a tax warehouse and the destination is known"></a>
+<a href="../images/1-Origin-is-a-tax-warehouse-&-destination-is-known" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a tax warehouse and the destination of the movement is known (i.e. the destination is not unknown nor it is for export).
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030)) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-AD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-AD and sets the state of the e-AD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-AD (IE801: C_EAD_VAL) to the Consignee.
+
+## Origin is a tax warehouse & destination is unknown
+
+<a href="../images/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" target="_blank"><img src="../images/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" alt="A process map describing a scenario where the origin is a tax warehouse and the destination is unknown"></a>
+<a href="../images/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a tax warehouse and the destination of the movement is unknown in accordance with Article 22 of Directive 2020/262.
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the Consignor. The validated e-AD (IE801: C_EAD_VAL) is stored by the MSA dispatch application in the “Accepted” state at the MSA of Dispatch. Finally, the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time) and the timer TIM_FDF is initiated to expire at the limit date for filling the destination fields.
+
+
+## Origin is import and the e-AD is inconsistent with the import data
+
+<a href="../images/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" target="_blank"><img src="../images/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" alt="A process map describing a scenario where the origin is import and the e-AD is inconsitent with the import data"></a>
+<a href="../images/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import.
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD (IE815: N_EAD_SUB) to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has found inconsistencies and notifies the MSA dispatch application with a rejection message (IE839: C_CUS_REJ) and the MSA dispatch application forwards the message to the Consignor.
+
+## Origin is import and the destination is known
+
+<a href="../images/4-Origin-is-import-and-the-destination-is-known.png" target="_blank"><img src="../images/4-Origin-is-import-and-the-destination-is-known.png" alt="A process map describing a scenario where the origin is import and the destination is known"></a>
+<a href="../images/4-Origin-is-import-and-the-destination-is-known.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import and the destination of the movement is known (i.e. the destination is not unknown nor it is for export). This scenario begins with the same sequence as the above scenario, only in this case the consistency with the import data is confirmed thus the MSA dispatch application and the validated e-AD is registered.
+
+In particular, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has not found any inconsistencies and notifies the MSA dispatch application with an acceptance message (IE815: N_EAD_SUB). 
+
+The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-AD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-AD and sets the state of the e-AD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-AD (IE801: C_EAD_VAL) to the Consignee.
+
+## Origin is import and the destination is unknown
+
+<a href="../images/5-Origin-is-import-and-the-destination-is-unknown.png" target="_blank"><img src="../images/5-Origin-is-import-and-the-destination-is-unknown.png" alt="A process map describing a scenario where the origin is import and the destination is unknown"></a>
+<a href="../images/5-Origin-is-import-and-the-destination-is-unknown.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import and the destination of the movement is unknown in accordance with Article 22 of Directive 2020/262. This scenario begins with the same sequence as the above scenario, only in this case the consistency with the import data is confirmed thus the MSA dispatch application and the validated e-AD is registered.
+
+In particular, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has found the draft e-AD (IE815: N_EAD_SUB) to be consistent with the import data and notifies the MSA dispatch application with an acceptance message (IE815: N_EAD_SUB).
+
+The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the Consignor. The validated e-AD (IE801: C_EAD_VAL) is stored by the MSA dispatch application in the “Accepted” state at the MSA of Dispatch. Finally, the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time) and the timer TIM_FDF is initiated to expire at the limit date for filling the destination fields.
+
+## Origin is Duty Paid and the destination is known
+
+<a href="../images/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" target="_blank"><img src="../images/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" alt="A process map describing a scenario where the origin is duty paid and the destination is known"></a>
+<a href="../images/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-SAD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a Duty Paid and the destination of the movement is known (i.e. for Duty Paid B2B movements, the destination is always known).
+
+The MSA dispatch application upon receiving the draft e-SAD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-SAD (the structure of ARC and the Check Digit algorithm are defined in rule ['R030'](rules.html#r030) of the Excise BPMs) and creates a validated e-SAD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of the movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-SAD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-SAD and sets the state of the e-SAD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-SAD (IE801: C_EAD_VAL) to the Consignee.
+
+
+## e-AD/e-SAD alerted
+
+<a href="../images/7-e-ADe-SAD-alerted.png" target="_blank"><img src="../images/7-e-ADe-SAD-alerted.png" alt="A process map describing a scenario where the e-AD or e-SAD is alerted"></a>
+<a href="../images/7-e-ADe-SAD-alerted.png" target="_blank">Open process map in a new tab.</a>
+
+## e-AD/e-SAD rejected
+
+<a href="../images/8-e-ADe-SAD-rejected..png" target="_blank"><img src="../images/8-e-ADe-SAD-rejected..png" alt="A process map describing a scenario where the e-AD or e-SAD is rejected"></a>
+<a href="../images/8-e-ADe-SAD-rejected..png" target="_blank">Open process map in a new tab.</a>
+
+## Cancellation of an e-AD by the Consignor
+
+<a href="../images/9-Cancellation-of-an-e-AD-by-the-Consignor.png" target="_blank"><img src="../images/9-Cancellation-of-an-e-AD-by-the-Consignor.png" alt="A process map describing a scenario where the e-AD is cancelled by the Consignor"></a>
+<a href="../images/9-Cancellation-of-an-e-AD-by-the-Consignor.png" target="_blank">Open process map in a new tab.</a>
+
+## Submission of e-AD of which delivery is “Accepted” (with or without shortages)
+
+<a href="../images/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank"><img src="../images/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" alt="A process map describing a scenario where an e-AD with a delivery status of "Accepted" is submitted"></a>
+<a href="../images/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank">Open process map in a new tab.</a>
+
+## Submission of e-SAD of which delivery is “Accepted” (with or without shortages)
+
+<a href="../images/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank"><img src="../images/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" alt="A process map describing a scenario where an e-SAD with a delivery status of "Accepted" is submitted"></a>
+<a href="../images/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank">Open process map in a new tab.</a>
+
+## Submission of e-AD/e-SAD of which delivery is “refused” 
+
+<a href="../images/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" target="_blank"><img src="../images/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" alt="A process map describing a scenario where an e-AD or e-SAD with a delivery status of "Refused" is submitted"></a>
+<a href="../images/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" target="_blank">Open process map in a new tab.</a>
+
+## Submission of e-AD of which delivery is partially refused
+
+<a href="../images/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" target="_blank"><img src="../images/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" alt="A process map describing a scenario where an e-AD with a delivery status of "partially refused" is submitted"></a>
+<a href="../images/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" target="_blank">Open process map in a new tab.</a>
+
+## Submission of e-SAD of which delivery is partially refused
+
+## Change of MS of Destination
+
+## Change MS of Destination where the Consignor diverts a movement back to a (former) MSA of Destination
+
+## Return to the tax warehouse of dispatch
+
+## Change of Consignee following the Submission of e-AD/e-SAD (MS of Destination unchanged)
+
+## Change of Place of Delivery following the Submission of e-AD/e-SAD (Consignee unchanged)
+
+## Splitting of Consignment
+
+## Status RequestResponse after the TIM_EAD_ESAD timer expiration - Reminder for RoR
+
+## Submission of explanations on delay for delivery - Reminder for RoR
+
+## Sending reminder message after expiry of the change of destination timer
+
+## Sending reminder message after expiration of the time limit to update the destination fields
+
+## Sending reminder message after expiration of the time limit to update the destination fields with Consignor explanations
+
+## Complementary explanations submission
+
+## Other process flows
+
+If you need a process flow that is not described here, you should use the [process flows in the existing DDNEA documentation](https://www.gov.uk/government/publications/emcs-functional-stage-31-fs31-technical-specifications). Ignore any references to SOAP or SOAP envelopes, the new API is RESTful.
