@@ -40,3 +40,4 @@ tmp
 vendor/
 python/__pycache__
 /public/
+./build
