@@ -1,5 +1,7 @@
 import bs4 as bs
 import json
+import os
+from os import path
 
 filename='business-rules.html'
 
@@ -9,6 +11,10 @@ filename='business-rules.html'
 soup = bs.BeautifulSoup(open(filename).read(), features="html.parser")
 
 rules = []
+partial_dir = './partials'
+
+if not os.path.exists(partial_dir):
+    os.makedirs(partial_dir)
 
 class Rule():
 	def __init__(self, table):
@@ -63,7 +69,7 @@ for h2 in soup.find_all('h2'):
 	table = h2.find_next_sibling('table')
 	rule = Rule(table)
 	rules.append(rule)
-	with open(f"_{rule.name}.md", "w") as file:
+	with open(f"{partial_dir}/_{rule.name}.md", "w") as file:
 		file.write(f"## {rule.name}\n{rule.asHTML()}")
 
 doc = f"---\ntitle: EMCS Business Rules\nweight: 5\ndescription: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service\n---\n"

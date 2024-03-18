@@ -8,6 +8,10 @@
    an..5
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -111,6 +115,18 @@
   </td>
   <td>
    NOTIFICATION OF ACCEPTED EXPORT
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE836
+  </td>
+  <td>
+   EXPORT DECLARATION INVALIDATION NOTIFICATION
   </td>
   <td>
   </td>

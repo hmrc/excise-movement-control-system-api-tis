@@ -8,6 +8,10 @@
    n1
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -50,7 +54,7 @@
    3
   </td>
   <td>
-   Export data not found
+   (reserved)
   </td>
   <td>
   </td>
@@ -62,7 +66,7 @@
    4
   </td>
   <td>
-   The content of the e-AD does not match with export data
+   Negative Cross-check result
   </td>
   <td>
   </td>
@@ -74,7 +78,7 @@
    5
   </td>
   <td>
-   Goods are rejected at export procedure
+   Unsatisfactory Control Result at OoExp
   </td>
   <td>
   </td>

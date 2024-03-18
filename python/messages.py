@@ -34,8 +34,8 @@ class MessageType():
         if h is not None:
             p = h.find_next()
             spans = p.findChildren('span')
-            while len(spans) > 0 and p.attrs['class'][0] in {'P29', 'P30'}:
-                if p.attrs['class'][0] == 'P29':
+            while len(spans) > 0 and p.attrs['class'][0] in {'P9', 'P10'}:
+                if p.attrs['class'][0] == 'P9':
                     fields.append(Field(spans))
                 else:
                     fields[-1].addRule(spans)
