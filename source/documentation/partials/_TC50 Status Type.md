@@ -8,6 +8,10 @@
    an3
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -171,6 +175,30 @@
   </td>
   <td>
    Stopped
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   X14
+  </td>
+  <td>
+   Accepted Export Declaration
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   X15
+  </td>
+  <td>
+   e-AD Request Accepted for Export
   </td>
   <td>
   </td>

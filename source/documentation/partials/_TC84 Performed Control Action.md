@@ -8,6 +8,10 @@
    n..2
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -74,7 +78,7 @@
    4
   </td>
   <td>
-   Annotated paper copy of documents (e.g. SAAD)
+   Annotated paper copy of documents
   </td>
   <td>
   </td>

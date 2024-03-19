@@ -1,5 +1,7 @@
 import bs4 as bs
 import json
+import os
+from os import path
 
 filename='codelists.html'
 
@@ -9,6 +11,10 @@ filename='codelists.html'
 soup = bs.BeautifulSoup(open(filename).read(), features="html.parser")
 
 codelists = []
+partial_dir = './partials'
+
+if not os.path.exists(partial_dir):
+    os.makedirs(partial_dir)
 
 class Code():
 	def __init__(self, tr):
@@ -22,7 +28,7 @@ class CodeList():
 		self.name = h2.text
 		p = h2.find_next_sibling('p')
 		self.format = p.text.removeprefix('Format ').strip()
-		self.context = p.find_next_sibling('p').find_all('span')[2].text.removeprefix('Details ').strip()
+		self.context = p.find_next_sibling('p').find_all('span')[1].text
 		trs = p.find_next_sibling('table').findChildren('tr')[1:]
 		self.codes = []
 		for tr in trs:
@@ -89,7 +95,7 @@ h2s = soup.find_all(lambda tag: tag.name == "h2")
 for h2 in h2s:
 	codelist = CodeList(h2)
 	codelists.append(codelist)
-	with open(f"_{codelist.name}.md", "w") as file:
+	with open(f"{partial_dir}/_{codelist.name}.md", "w") as file:
 		file.write(f"## {codelist.name.split(' ')[0]}\n{codelist.asHTML()}")
 
 doc = f"---\ntitle: EMCS Technical Codelists\nweight: 5\ndescription: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service\n---\n"

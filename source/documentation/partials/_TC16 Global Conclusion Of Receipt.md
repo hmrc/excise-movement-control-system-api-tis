@@ -8,6 +8,10 @@
    n..2
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -86,7 +90,7 @@
    22
   </td>
   <td>
-   Exit accepted although unsatisfactory
+   Exit accepted with minor discrepancies detected
   </td>
   <td>
   </td>

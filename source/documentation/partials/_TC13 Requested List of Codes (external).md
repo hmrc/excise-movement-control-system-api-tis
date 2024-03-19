@@ -8,6 +8,10 @@
    n..2
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -315,6 +319,18 @@
   </td>
   <td>
    Event submitting persons
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   26
+  </td>
+  <td>
+   National Administration - Degree Plato
   </td>
   <td>
   </td>

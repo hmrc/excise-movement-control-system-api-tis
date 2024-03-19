@@ -8,6 +8,10 @@
    n1
   </td>
  </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
 </table>
 <table>
  <tr>
@@ -26,7 +30,7 @@
    1
   </td>
   <td>
-   Unknown ARC
+   (reserved)
   </td>
   <td>
   </td>
