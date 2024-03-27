@@ -48,9 +48,9 @@ class Rule():
 	    # One new line just makes the output look nicer
 	    # Two new lines \n\n creates a new paragraph tag in the html
 	    # Two strings force a line break within the same paragraph
-		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\n', '  \n')
+		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('•', '-').replace('\n - ', '\n\n - ').replace('\n- ', '\n\n - ').replace('\n', '  \n')
 
-		if (text.find("three digits number") != -1):
+		if (text.find("No guarantee is provided ") != -1):
 		    print("raw text: " + td.get_text())
 		    print("raw text with new lines: " + td.get_text("\n"))
 		    print("final text: " + text)
