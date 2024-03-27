@@ -54,7 +54,7 @@ for index in range(len(trs)-1):
     next_tds = next_tr.find_all('td')
     next_rule_code = next_tds[0].find('p').text.strip()
 
-    # rules could be on two pages. If nect rule code is empty then the rule will be on two pages,
+    # rules could be on two pages. If next rule code is empty then the rule will be on two pages,
     # so append the next rules (paragraph) to the current rule code
     if not next_rule_code:
         paragraph_tags = next_tds[1].find_all('p')
