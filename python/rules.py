@@ -28,32 +28,16 @@ class Rule():
 	def asHTML(self):
 		html = bs.BeautifulSoup()
 
-		#table = html.new_tag('table')
-		#html.append(table)
-		#tr = html.new_tag('tr')
-		#table.append(tr)
-		#th = html.new_tag('th')
-		#tr.append(th)
-		#th.string = self.name
-		#td = html.new_tag('td')
-		#tr.append(td)
-		#td.string = self.description
-
 		html.append(self.description)
 
 		return html.prettify()
 
 	def content(self, td):
 	    # Markdown whitespace:
-	    # One new line just makes the output look nicer
+	    # One new line just makes the output markdown look nicer
 	    # Two new lines \n\n creates a new paragraph tag in the html
-	    # Two strings force a line break within the same paragraph
+	    # Two strings force a line break within the same paragraph (<br>)
 		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('•', '-').replace('\n - ', '\n\n - ').replace('\n- ', '\n\n - ').replace('\n', '  \n')
-
-		if (text.find("No guarantee is provided ") != -1):
-		    print("raw text: " + td.get_text())
-		    print("raw text with new lines: " + td.get_text("\n"))
-		    print("final text: " + text)
 
 		return text
 
