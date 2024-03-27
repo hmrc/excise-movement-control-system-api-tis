@@ -28,21 +28,33 @@ class Rule():
 	def asHTML(self):
 		html = bs.BeautifulSoup()
 
-		table = html.new_tag('table')
-		html.append(table)
-		tr = html.new_tag('tr')
-		table.append(tr)
-		th = html.new_tag('th')
-		tr.append(th)
-		th.string = self.name
-		td = html.new_tag('td')
-		tr.append(td)
-		td.string = self.description
+		#table = html.new_tag('table')
+		#html.append(table)
+		#tr = html.new_tag('tr')
+		#table.append(tr)
+		#th = html.new_tag('th')
+		#tr.append(th)
+		#th.string = self.name
+		#td = html.new_tag('td')
+		#tr.append(td)
+		#td.string = self.description
+
+		html.append(self.description)
 
 		return html.prettify()
 
 	def content(self, td):
-		text = td.text.strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\\n','\n<br/>')
+	    # Markdown whitespace:
+	    # One new line just makes the output look nicer
+	    # Two new lines \n\n creates a new paragraph tag in the html
+	    # Two strings force a line break within the same paragraph
+		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\n', '  \n')
+
+		if (text.find("three digits number") != -1):
+		    print("raw text: " + td.get_text())
+		    print("raw text with new lines: " + td.get_text("\n"))
+		    print("final text: " + text)
+
 		return text
 
 h1 = soup.find(lambda tag: tag.name == "h1" and 'Rules' in tag.text)
@@ -52,7 +64,6 @@ trs = table.findChildren('tr')
 new_trs = []
 
 for index in range(len(trs)-1):
-
     tds = trs[index].find_all('td')
 
     next_tr = trs[index+1]
