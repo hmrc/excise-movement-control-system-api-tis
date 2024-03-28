@@ -35,9 +35,9 @@ class Condition():
 
 	def content(self, td):
 	    # Markdown whitespace:
-	    # One new line just makes the output markdown look nicer
+	    # One new line \n just makes the output markdown look nicer
 	    # Two new lines \n\n creates a new paragraph tag in the html
-	    # Two strings force a line break within the same paragraph (<br>)
+	    # Two spaces force a line break within the same paragraph (<br>)
 		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('•', '-').replace('\n - ', '\n\n - ').replace('\n- ', '\n\n - ').replace('\n', '  \n')
 
 		return text
