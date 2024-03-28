@@ -19,12 +19,15 @@ if not os.path.exists(partial_dir):
 class Rule():
 	def __init__(self, table):
 		trs = table.findChildren('tr')
-		self.name = self.content(trs[0])
-		self.category = self.content(trs[1])
-		self.description = self.content(trs[2])
-		self.validation = self.content(trs[4])
-		self.optionality = self.content(trs[7])
-		self.comments = self.content(trs[8])
+		headers = []
+		for tr in trs:
+		    headers.append(tr.findChildren('td')[0].text.strip())
+		self.name = self.content(trs[headers.index("BR ID")])
+		self.category = self.content(trs[headers.index("BR Category")])
+		self.description = self.content(trs[headers.index("BR Description")])
+		self.validation = self.content(trs[headers.index("FESS Validation Rule")])
+		self.optionality = self.content(trs[headers.index("Optionality")])
+		self.comments = self.content(trs[headers.index("Comments")])
 
 	def toJSON(self):
 		return json.dumps(self, default=vars, indent=4)
@@ -61,7 +64,7 @@ class Rule():
 		return html.prettify()
 
 	def content(self, tr):
-		text = tr.findChildren('td')[1].text.strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\\n','\n<br/>')
+		text = tr.findChildren('td')[1].get_text().strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('•', '-').replace('\n - ', '\n\n - ').replace('\n- ', '\n\n - ').replace('\n', '  \n')
 		return text
 
 

@@ -28,21 +28,17 @@ class Rule():
 	def asHTML(self):
 		html = bs.BeautifulSoup()
 
-		table = html.new_tag('table')
-		html.append(table)
-		tr = html.new_tag('tr')
-		table.append(tr)
-		th = html.new_tag('th')
-		tr.append(th)
-		th.string = self.name
-		td = html.new_tag('td')
-		tr.append(td)
-		td.string = self.description
+		html.append(self.description)
 
 		return html.prettify()
 
 	def content(self, td):
-		text = td.text.strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('\\n','\n<br/>')
+	    # Markdown whitespace:
+	    # One new line \n just makes the output markdown look nicer
+	    # Two new lines \n\n creates a new paragraph tag in the html
+	    # Two spaces force a line break within the same paragraph (<br>)
+		text = td.get_text("\n").strip().replace('\u2022','-').replace('\u2018','"').replace('\u2019','"').replace('\u2013','-').replace('\u00a0',' ').replace('•', '-').replace('\n - ', '\n\n - ').replace('\n- ', '\n\n - ').replace('\n', '  \n')
+
 		return text
 
 h1 = soup.find(lambda tag: tag.name == "h1" and 'Rules' in tag.text)
@@ -52,14 +48,13 @@ trs = table.findChildren('tr')
 new_trs = []
 
 for index in range(len(trs)-1):
-
     tds = trs[index].find_all('td')
 
     next_tr = trs[index+1]
     next_tds = next_tr.find_all('td')
     next_rule_code = next_tds[0].find('p').text.strip()
 
-    # rules could be on two pages. If nect rule code is empty then the rule will be on two pages,
+    # rules could be on two pages. If next rule code is empty then the rule will be on two pages,
     # so append the next rules (paragraph) to the current rule code
     if not next_rule_code:
         paragraph_tags = next_tds[1].find_all('p')

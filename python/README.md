@@ -114,7 +114,7 @@ To build the rule list do the following:
 To view the result in a browser:
 
 1. Copy all the content in the **./python/partial** directory into **./source/documentation/partials**
-2. Copy the following file in **./python** directory into the **./source/document** directory
+2. Copy the following file in **./python** directory into the **./source/documentation** directory
 
 ```aidl
 messagetypes.html.md.erb
