@@ -2,4 +2,3 @@
 GET     /guides/excise-movement-control-system-api-tis           controllers.Default.redirect(to = "/guides/excise-movement-control-system-api-tis/")
 GET     /guides/excise-movement-control-system-api-tis/          controllers.Assets.at(path="/public", file="index.html")
 GET     /guides/excise-movement-control-system-api-tis/*file     controllers.Assets.at(path="/public", file)
-GET     /guides/excise-movement-control-system-api-tis/excise-movement-DDNEA       controllers.Default.redirect(to = "https://github.com/hmrc/excise-movement-control-system-api-tis/tree/main/source/documentation")
