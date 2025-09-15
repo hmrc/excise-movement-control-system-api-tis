@@ -34,6 +34,7 @@ The TIS should be read with the following related documentation:
 - [API specification](/api-documentation/docs/api/service/excise-movement-control-system-api/1.0/oas/page)
 - [Service guide](/guides/emcs-api-service-guide/)
 - [Testing guide](/guides/emcs-api-testing-guide/)
+- [DDNEA 4.2](/guides/excise-movement-control-system-api-tis/excise-movement-DDNEA)
 
 ## Changelog
 
