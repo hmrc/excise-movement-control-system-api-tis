@@ -6,7 +6,7 @@ description: Software developers, designers, product owners or business analysts
 
 # EMCS technical interface specification
 
-Version 0.35.0 issued October 2025
+Last updated: October 2025
 ***
 
 
@@ -61,27 +61,27 @@ ZIP, 1.6 MB
 
 The following references taken from the Release Scope Document (RSD) is a list of the changes HMRC aim to deliver for the FS4.2 release on Thursday 12 February 2026.
 
-| DDNEA RFC    | FESS RFC | Description                                                                                                                                                  |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| DDNEA-P4-363 | FESS-324 | Update of rules R271 - R276                                                                                                                                  |
-| DDNEA-P4-364 | FESS-325 | Removal of 'SAD' from Common Specifications/Rev1                                                                                                             |
-| DDNEA-P4-365 | FESS-326 | Minor Updates in the description of EMCS Code lists/Rev1Rev2                                                                                                 |
-| DDNEA-P4-366 | FESS-328 | Update the description of IE839 in TC60 and TC64                                                                                                             |
-| DDNEA-P4-369 | FESS-333 | Update of the multiplicity of the IE839 data group NEGATIVE CROSS-CHECK VALIDATION RESULTS from 99x to 999x                                                  |
-| DDNEA-P4-371 | n/a      | Update of the wording of the technical rule TR0104/Rev1                                                                                                      |
-| DDNEA-P4-372 | FESS-335 | Change the Condition C066 to a Rule/Rev1                                                                                                                     |
-| DDNEA-P4-378 | FESS-341 | Filling of the Data Group (CONSIGNEE) TRADER in the IE829, IE839 messages                                                                                    |
-| DDNEA-P4-379 | n/a      | Update of the DDNEA XSDs regarding the multiplicity defined as maxOccurs="unbounded"/Rev1                                                                    |
-| DDNEA-P4-380 | FESS-342 | Moving the Data Item "Export Declaration Acceptance or Goods Released for Export" under the Data Group "EXPORT DECLARATION ACCEPTANCE/RELEASE" of IE829/Rev1 |
-| DDNEA-P4-381 | FESS-343 | New business validation on the "Date of Arrival of Excise  Products” data item of the IE818 - Accepted or Rejected Report of Receipt/Export                  |
-| DDNEA-P4-383 | FESS-345 | Validations regarding the usage of temporary authorisations in e-AD/e-SAD/Rev1                                                                               |
-| DDNEA-P4-387 | FESS-349 | Deprecation of MVS messages                                                                                                                                  |
-| n/a          | FESS-310 | Updates in relation to Code list TC72 - Diagnosis Code/Rev1                                                                                                  |
-| n/a          | FESS-312 | Removal of NA-NL from CL National Administration - Degree Plato/Rev1                                                                                         |
-| n/a          | FESS-318 | Updates in relation to the Alcoholic Strength by Volume in Percentage (ABV)/Rev1                                                                             |
-| n/a          | FESS-319 | Change of Destination with unchanged Consignee and changed Destination Type Code/Rev1Rev2                                                                    |
-| n/a          | FESS-323 | Addition of the new data item 'Independent Small Producers Declaration_LNG' in the IE815/IE801 messages/Rev1                                                 |
-| n/a          | FESS-330 | Inclusion of CN Code '24041100' in the business code list BC37/Rev1                                                                                          |
+| <span style="white-space:nowrap;">DDNEA RFC</span>    | <span style="white-space:nowrap;">FESS RFC</span> | Description                                                                                                                                                  |
+| ----------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <span style="white-space:nowrap;">DDNEA-P4-363</span> | <span style="white-space:nowrap;">FESS-324</span> | Update of rules R271 - R276                                                                                                                                  |
+| <span style="white-space:nowrap;">DDNEA-P4-364</span> | <span style="white-space:nowrap;">FESS-325</span> | Removal of 'SAD' from Common Specifications/Rev1                                                                                                             |
+| <span style="white-space:nowrap;">DDNEA-P4-365</span> | <span style="white-space:nowrap;">FESS-326</span> | Minor Updates in the description of EMCS Code lists/Rev1Rev2                                                                                                 |
+| <span style="white-space:nowrap;">DDNEA-P4-366</span> | <span style="white-space:nowrap;">FESS-328</span> | Update the description of IE839 in TC60 and TC64                                                                                                             |
+| <span style="white-space:nowrap;">DDNEA-P4-369</span> | <span style="white-space:nowrap;">FESS-333</span> | Update of the multiplicity of the IE839 data group NEGATIVE CROSS-CHECK VALIDATION RESULTS from 99x to 999x                                                  |
+| <span style="white-space:nowrap;">DDNEA-P4-371</span> | n/a                                               | Update of the wording of the technical rule TR0104/Rev1                                                                                                      |
+| <span style="white-space:nowrap;">DDNEA-P4-372</span> | <span style="white-space:nowrap;">FESS-335</span> | Change the Condition C066 to a Rule/Rev1                                                                                                                     |
+| <span style="white-space:nowrap;">DDNEA-P4-378</span> | <span style="white-space:nowrap;">FESS-341</span> | Filling of the Data Group (CONSIGNEE) TRADER in the IE829, IE839 messages                                                                                    |
+| <span style="white-space:nowrap;">DDNEA-P4-379</span> | n/a                                               | Update of the DDNEA XSDs regarding the multiplicity defined as maxOccurs="unbounded"/Rev1                                                                    |
+| <span style="white-space:nowrap;">DDNEA-P4-380</span> | <span style="white-space:nowrap;">FESS-342</span> | Moving the Data Item "Export Declaration Acceptance or Goods Released for Export" under the Data Group "EXPORT DECLARATION ACCEPTANCE/RELEASE" of IE829/Rev1 |
+| <span style="white-space:nowrap;">DDNEA-P4-381</span> | <span style="white-space:nowrap;">FESS-343</span> | New business validation on the "Date of Arrival of Excise  Products” data item of the IE818 - Accepted or Rejected Report of Receipt/Export                  |
+| <span style="white-space:nowrap;">DDNEA-P4-383</span> | <span style="white-space:nowrap;">FESS-345</span> | Validations regarding the usage of temporary authorisations in e-AD/e-SAD/Rev1                                                                               |
+| <span style="white-space:nowrap;">DDNEA-P4-387</span> | <span style="white-space:nowrap;">FESS-349</span> | Deprecation of MVS messages                                                                                                                                  |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-310</span> | Updates in relation to Code list TC72 - Diagnosis Code/Rev1                                                                                                  |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-312</span> | Removal of NA-NL from CL National Administration - Degree Plato/Rev1                                                                                         |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-318</span> | Updates in relation to the Alcoholic Strength by Volume in Percentage (ABV)/Rev1                                                                             |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-319</span> | Change of Destination with unchanged Consignee and changed Destination Type Code/Rev1Rev2                                                                    |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-323</span> | Addition of the new data item 'Independent Small Producers Declaration_LNG' in the IE815/IE801 messages/Rev1                                                 |
+| n/a                                                   | <span style="white-space:nowrap;">FESS-330</span> | Inclusion of CN Code '24041100' in the business code list BC37/Rev1                                                                                          |
 
 
 ## Related documentation
