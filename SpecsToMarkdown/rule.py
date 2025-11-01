@@ -1,6 +1,7 @@
 import bs4 as bs
 import json
 
+
 class Rule():
 	def __init__(self, table):
 		trs = table.findChildren('tr')

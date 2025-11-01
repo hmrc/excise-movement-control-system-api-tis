@@ -1,5 +1,6 @@
 import bs4 as bs
 
+
 class Table():
 	def __init__(self, row):
 		tds = row.findChildren('td')
