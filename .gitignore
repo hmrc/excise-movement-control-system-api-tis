@@ -38,7 +38,14 @@ test-result
 tmp
 .vscode/
 vendor/
-python/__pycache__
+SpecsToMarkdown/__pycache__
 /public/
 build
-/python/partials
+/SpecsToMarkdown/partials
+
+messagetypes.html.md.erb
+SpecsToMarkdown/business-rules.html.md.erb
+SpecsToMarkdown/conditions.html.md.erb
+SpecsToMarkdown/rules.html.md.erb
+SpecsToMarkdown/technical-codelists.html.md.erb
+source/documentation/partials/_.md

@@ -1,0 +1,10 @@
+[project]
+name = "specstomarkdown"
+version = "0.1.0"
+description = "Turn the DDNEA zip file into Markdown/ERBs for use by Middleman"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.14.2",
+    "requests>=2.32.5",
+]
