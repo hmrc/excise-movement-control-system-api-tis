@@ -5,6 +5,7 @@ import itertools
 import utils
 import json
 
+
 class MessageType():
 
     def __init__(self, messageTypeTag):

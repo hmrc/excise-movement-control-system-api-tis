@@ -1,8 +1,10 @@
 import math
 
+
 ignoredFields = [
     'Message sender'
 ]
+
 
 # Get message name from 2nd cell in table
 def getMessageName(html):
@@ -13,8 +15,10 @@ def getMessageName(html):
 def isStartTable(table):
     return table.find('td').text.strip() == 'MESSAGE'
 
+
 def mergeTables(target, source):
     [target.append(tr) for tr in source.findAll('tr')]
+
 
 def joinTables(html):
     lastTable = None
@@ -41,6 +45,7 @@ def restructureRow(tr, fields):
             fieldtr.insert_before(tr)
             fieldtr.extract()
 
+
 def singleStructure(html):
     tables = html.findAll('table')
     structure = tables[1]
@@ -66,6 +71,7 @@ def fixRules(html):
                 tds[4].string = f"{rule} {tds[4].text}"
                 tds[3].string = f"{tds[3].text.replace(rule, '')}"
 
+
 # Make rule hyperlinks ====
 def rulesToLinks(html):
     table = html.findAll('table')[1]
@@ -74,6 +80,7 @@ def rulesToLinks(html):
         rules = tds[4].text
         tds[4].string = ''
         tds[4].extend(ruleLinks(html, rules))
+
 
 def ruleLinks(html, rules):
     links = []
@@ -84,6 +91,7 @@ def ruleLinks(html, rules):
             links.append(a)
             links.append(html.new_tag('div'))
     return links
+
 
 # Indent message elements in rows ====
 def indent(html):
@@ -121,10 +129,12 @@ def insertHeadings(html):
 
     return name
 
+
 def createTableHeader(html, tr, title):
     td = html.new_tag('th')
     td.string = title
     tr.append(td)
+
 
 def clearCellStyle(table):
     for td in table.findAll('td'):
@@ -133,14 +143,17 @@ def clearCellStyle(table):
         del tr['style']
     del table['style']
 
+
 def clearParagraphStyle(table):
     for p in table.findAll('p'):
         del p['style']
+
 
 def removeEmptyDivs(table):
     for div in table.findAll('div'):
         if div.text.strip() == '':
             div.extract()
+
 
 # Message Header Table ========
 def messageHeaderTableHeadings(html, table, tr, name, xmlCell):
@@ -162,6 +175,7 @@ def messageHeaderTableHeadings(html, table, tr, name, xmlCell):
     clearParagraphStyle(table)
     removeEmptyDivs(table)
 
+
 # Message details Table ========
 def messageDetailsTableHeadings(html, table):
     tr = html.new_tag('tr')
@@ -175,4 +189,3 @@ def messageDetailsTableHeadings(html, table):
 
     clearCellStyle(table)
     clearParagraphStyle(table)
-

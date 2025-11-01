@@ -3,6 +3,7 @@ def createTableHeader(html, tr, title):
     td.string = title
     tr.append(td)
 
+
 def createTableData(html, tr, data):
     td = html.new_tag('td')
     td.string = data
