@@ -1,0 +1,185 @@
+## TC64
+<table>
+ <tr>
+  <th>
+   TC64 Requested Message Type
+  </th>
+  <td>
+   an..5
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   IE801
+  </td>
+  <td>
+   E-AD/E-SAD
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE803
+  </td>
+  <td>
+   NOTIFICATION OF DIVERTED E-AD
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE807
+  </td>
+  <td>
+   INTERRUPTION OF MOVEMENT
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE810
+  </td>
+  <td>
+   CANCELLATION OF AN E-AD
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE813
+  </td>
+  <td>
+   CHANGE OF DESTINATION
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE818
+  </td>
+  <td>
+   ACCEPTED OR (PARTIALLY) REFUSED REPORT OF RECEIPT/EXPORT
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE819
+  </td>
+  <td>
+   ALERT OR REJECTION OF AN E-AD/E-SAD
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE829
+  </td>
+  <td>
+   NOTIFICATION OF ACCEPTED EXPORT
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE836
+  </td>
+  <td>
+   EXPORT DECLARATION INVALIDATION NOTIFICATION
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE839
+  </td>
+  <td>
+   REJECTION OF E-AD FOR EXPORT
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE881
+  </td>
+  <td>
+   MANUAL CLOSURE RESPONSE
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   IE905
+  </td>
+  <td>
+   STATUS RESPONSE
+  </td>
+  <td>
+   The IE905 should be included only for historical movements, which were manually closed with a IE905 message.
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   None
+  </td>
+  <td>
+   NONE
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

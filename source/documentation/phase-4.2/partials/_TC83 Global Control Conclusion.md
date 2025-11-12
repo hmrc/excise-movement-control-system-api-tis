@@ -1,0 +1,88 @@
+## TC83
+<table>
+ <tr>
+  <th>
+   TC83 Global Control Conclusion
+  </th>
+  <td>
+   n1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   Satisfactory
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   Minor discrepancies found
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   Interruption recommended
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   Intention to make claim under Article 9 of Council Directive 2020/262
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   5
+  </td>
+  <td>
+   Allowable loss detected, in relation to Article 6 of Council Directive 2020/262
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

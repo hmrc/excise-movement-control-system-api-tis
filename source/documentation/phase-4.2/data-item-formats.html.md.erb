@@ -1,0 +1,125 @@
+---
+title: EMCS API data item formats
+weight: 3
+description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
+---
+# Data item formats
+<%= partial 'documentation/partials/google_tag_manager_js' %>
+Every Data Item within a Common Domain Exchange can be one of the following:
+
+- numeric (n)
+- alphanumeric (an)
+- text field (a)
+- dateTime
+- date
+- time
+- binary data
+
+A field may be defined with a certain number of characters. `..` is used to mean 'up to'. 
+
+For example: 
+
+-	`a2` refers to a text field of exactly 2 characters
+-	`an..32` refers to an alphanumeric value up to 32 characters in length.
+
+
+This page defines the conventions used for the Data Item formats when present in the Common Domain. The Data Item conventions on this page are not part of the Syntactic layer validations, except for those incorporated in [EMCS XSDs](https://github.com/hmrc/excise-movement-control-system-api/tree/main/app/xsd). It is the responsibility of the application sending message exchanges over the Common Domain (NEA and CDEA) to conform to the Data Item conventions defined on this page.
+
+## Numerical Fields
+
+Numerical fields contain either a cardinal value (positive integer value) or a decimal value.
+
+The decimal separator is the decimal point “.”. No other symbols are permitted as decimal separator.
+
+Triad separators, such as a comma, must not be used.
+
+Signs, whether positive or negative, must not be used (all values are always intrinsically positive).
+
+For decimal values, the decimal notation (with the decimal point) should only be used when there is a reason to indicate precision.
+
+For example, for a mass value:
+
+1.	89 kg, with a precision of 1 kg.
+2.	89.2 kg, with a precision of 0.1 kg.
+3.	89.20 kg, with a precision of 0.01 kg.
+
+For numerical values, leading zeroes must not be used. Trailing zeroes should only be used to indicate precision.
+
+If the decimal point is present, at least one digit must be present before the decimal point.
+
+If the decimal point is present, at least one digit must be present after the decimal point.
+
+Below are some worked examples for a n..11,3 type:
+
+| Value entered    | Status  | Details                                                                                         |
+| ---------------- | ------- | ----------------------------------------------------------------------------------------------- |
+| 12345678.123     | Valid   |                                                                                                 |
+| 123456789012.123 | Invalid | Too many digits before decimal point and hence too many digits in total                         |
+| 12345678.1234    | Invalid | Too many digits after decimal point and hence too many digits in total                          |
+| 0123             | Invalid | Leading zero not permitted                                                                      |
+| +123             | Invalid | Plus sign not allowed                                                                           |
+| -123             | Invalid | Minus sign not allowed                                                                          |
+| 1,234            | Invalid | Triad separator not allowed                                                                     |
+| .3               | Invalid | No digit before decimal point                                                                   |
+| 12345.           | Invalid | No digit after decimal point                                                                    |
+| 0.3              | Valid   |                                                                                                 |
+| 1.3E1            | Invalid | Only digits and decimal point allowed                                                           |
+| 12345678901      | Valid   | n..11,3 can have a maximum of 11 digits, of which a maximum of 3 can be after the decimal point |
+
+The rules above also apply to numerical values within Codelists. Values in such a list should always be stored without leading zeroes (in order to avoid problems of comparing e.g. a value of 60 against a value of 060). If the leading zeroes are omitted, a numerical comparison should always work out fine.
+
+There are no Codelists with decimal values.
+
+## Date/Time Fields
+
+The specification of Date and/or Time fields used in [message types](messagetypes.html) is as per [W3C XML Schema specification](http://www.w3.org/TR/xmlschema-0/) except that:
+
+- for all times in DateTime, Date and Time fields time zone must be omitted with the local time always implied as being the Coordinated Universal Time (UTC, sometimes called "Greenwich Mean Time");
+- all years in DateTime and Date fields are in the Common Era (i.e. AD), hence the negative sign is not permitted.
+
+Although you should refer to the [W3C XML Schema specification](http://www.w3.org/TR/xmlschema-0/), the following table indicates the format for each type and their corresponding regular expression.
+
+Date/Time fields format and their corresponding regular expressions:
+
+|Type| Regular Expression|
+| - | - |
+|Date	|yyyy '-' MM '-' dd<br></br>\d{4}-\d{2}-\d{2}|
+|Time	|hh ':' mm ':' ss ('.' s+)?<br></br>\d{2}:\d{2}:\d{2}(\.\d+)?|
+|Date/Time|	yyyy '-' MM '-' dd 'T' hh ':' mm ':' ss ('.' s+)?<br></br>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?|
+
+Where:
+
+- yyyy is a four-or-more digit
+- the remaining '-'s are separators between parts of the date portion
+- MM is a two-digit numeral that represents the month
+- dd is a two-digit numeral that represents the day
+- 'T' is a separator indicating that time-of-day follows
+- hh is a two-digit numeral that represents the hour; '24' is permitted if the minutes and seconds represented are zero, and the dateTime value so represented is the first instant of the following day (the hour property of a dateTime object in the ·value space· cannot have a value greater than 23)
+- ':' is a separator between parts of the time-of-day portion
+- mm is a two-digit numeral that represents the minute
+- ss is a two-integer-digit numeral that represents the whole seconds
+- '.' s+ (if present) represents the fractional seconds
+
+## Binary data
+
+For Data Items containing arbitrary binary data, the Base64-encoding will be used, thus the base64Binary XML Schema datatype.
+
+The specification of base64Binary fields used in [message types](messagetypes.html) is as per [W3C XML Schema specification](http://www.w3.org/TR/xmlschema-0/).
+
+The file format of binary embedded data should be limited to two specific standards based file formats:
+
+- Joint Photographic Experts Group (JPEG) for images
+- Portable Document Format (PDF) for documents
+
+The file format of binary embedded data can be determined by the first few bytes of the file (also known as “magic number”):
+
+- The Joint Photographic Experts Group (JPEG) files always begin with the bytes “FF D8”
+- The Portable Document Format (PDF) files always begin with the bytes “25 50 44 46” (the hex values of “%PDF”)
+
+## Language Indicator for Language-sensitive text fields
+
+The Language Indicator (LNG), associated with Language-Sensitive Data Items, denotes the language that the text was intended to be written. This does not preclude cases where characters of another language (i.e. other than the one indicated) are present in the associated Language-Sensitive text field. The character set and the encoding used in EMCS (Unicode and UTF-8, respectively) supports characters of multiple languages.
+
+## Character set usage
+
+The character set used in all Common Domain message exchanges is the [Unicode Standard](http://www.unicode.org/versions/Unicode6.1.0/). The encoding used in all Common Domain message exchanges is the UTF-8 Standard. It should be noted that both of these requirements concern the whole message content.

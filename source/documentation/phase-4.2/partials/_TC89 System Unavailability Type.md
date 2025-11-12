@@ -1,0 +1,64 @@
+## TC89
+<table>
+ <tr>
+  <th>
+   TC89 System Unavailability Type
+  </th>
+  <td>
+   a1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   N
+  </td>
+  <td>
+   Non-Implemented
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   S
+  </td>
+  <td>
+   Scheduled
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   U
+  </td>
+  <td>
+   Unscheduled
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

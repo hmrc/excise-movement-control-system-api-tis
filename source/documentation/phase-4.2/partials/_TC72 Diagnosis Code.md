@@ -1,0 +1,100 @@
+## TC72
+<table>
+ <tr>
+  <th>
+   TC72 Diagnosis Code
+  </th>
+  <td>
+   n1
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   (reserved)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   Body Record Unique Reference does not exist in the e-AD
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   No corresponding GOODS ITEM in the export declaration
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   Weight/mass do not match
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   5
+  </td>
+  <td>
+   The destination type code of the e-AD is not export
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   6
+  </td>
+  <td>
+   CN codes do not match
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

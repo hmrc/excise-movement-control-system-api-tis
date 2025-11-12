@@ -1,0 +1,112 @@
+## TC16
+<table>
+ <tr>
+  <th>
+   TC16 Global Conclusion Of Receipt
+  </th>
+  <td>
+   n..2
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   Receipt accepted and satisfactory
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   Receipt accepted although unsatisfactory
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   Receipt refused
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   Receipt partially refused
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   21
+  </td>
+  <td>
+   Exit accepted and satisfactory
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   22
+  </td>
+  <td>
+   Exit accepted with minor discrepancies detected
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   23
+  </td>
+  <td>
+   Exit refused
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

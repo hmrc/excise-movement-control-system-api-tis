@@ -1,0 +1,160 @@
+## TC32
+<table>
+ <tr>
+  <th>
+   TC32 Destination Type Code
+  </th>
+  <td>
+   n..2
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+  </td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>
+   Value
+  </th>
+  <th>
+   Description
+  </th>
+  <th>
+   Remarks
+  </th>
+ </tr>
+ <tr>
+  <td>
+   1
+  </td>
+  <td>
+   Destination - Tax warehouse
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   2
+  </td>
+  <td>
+   Destination - Registered consignee
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   3
+  </td>
+  <td>
+   Destination - Temporary registered consignee
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   4
+  </td>
+  <td>
+   Destination - Direct delivery
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   5
+  </td>
+  <td>
+   Destination - Exempted consignee
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   6
+  </td>
+  <td>
+   Destination - Export
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   7
+  </td>
+  <td>
+   (reserved)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   8
+  </td>
+  <td>
+   Unknown destination (consignee unknown)
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   9
+  </td>
+  <td>
+   Destination – Certified Consignee
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   10
+  </td>
+  <td>
+   Destination – Temporary Certified Consignee
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   11
+  </td>
+  <td>
+   Destination-Return to the place of dispatch of the Consignor
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+ </tr>
+</table>

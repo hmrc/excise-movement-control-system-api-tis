@@ -1,0 +1,419 @@
+---
+title: EMCS API process flows
+weight: 2
+description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
+---
+<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? "phase-" }.first %>
+
+# Process flows
+
+## High level process flow
+<%= partial 'documentation/partials/google_tag_manager_js' %>
+<a href="../../images/<%= phase_dir %>/emcs-api-high-level-process-map.png" target="_blank"><img src="../../images/<%= phase_dir %>/emcs-api-high-level-process-map.png" alt="A high level process map for EMCS API"></a>
+<a href="../../images/<%= phase_dir %>/emcs-api-high-level-process-map.png" target="_blank">Open high level process map in a new tab.</a>
+
+This process flow describes the EMCS API from a high level perspective.
+
+## Detailed process flows
+
+The following process flow diagrams describe the flow of messages between actors (such as consignors or consignees) and Member State Administration (MSA) systems in certain scenarios.
+
+<a href="../../images/<%= phase_dir %>/legend.png" target="_blank"><img src="../../images/<%= phase_dir %>/legend.png" alt="A legend for the detailed process maps for EMCS API"></a>
+<a href="../../images/<%= phase_dir %>/legend.png" target="_blank">Open detailed process map legend in a new tab.</a>
+
+Outgoing messages are shown in orange. Incoming messages are shown in pink. Movement statuses are shown in green. Timers are shown in purple. Actors appear in a green column. Systems appear in a grey column.
+
+Arrows are used to indicate the direction in which messages flow.
+
+## Origin is a tax warehouse & destination is known
+
+<a href="../../images/<%= phase_dir %>/1-Origin-is-a-tax-warehouse-&-destination-is-known.png" target="_blank"><img src="../../images/<%= phase_dir %>/1-Origin-is-a-tax-warehouse-&-destination-is-known.png" alt="A process map describing a scenario where the origin is a tax warehouse and the destination is known"></a>
+<a href="../../images/<%= phase_dir %>/1-Origin-is-a-tax-warehouse-&-destination-is-known" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a tax warehouse and the destination of the movement is known (i.e. the destination is not unknown nor it is for export).
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030)) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-AD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-AD and sets the state of the e-AD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-AD (IE801: C_EAD_VAL) to the Consignee.
+
+## Origin is a tax warehouse & destination is unknown
+
+<a href="../../images/<%= phase_dir %>/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" target="_blank"><img src="../../images/<%= phase_dir %>/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" alt="A process map describing a scenario where the origin is a tax warehouse and the destination is unknown"></a>
+<a href="../../images/<%= phase_dir %>/2-Origin-is-a-tax-warehouse-&-destination-is-unknown.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a tax warehouse and the destination of the movement is unknown in accordance with Article 22 of Directive 2020/262.
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the Consignor. The validated e-AD (IE801: C_EAD_VAL) is stored by the MSA dispatch application in the “Accepted” state at the MSA of Dispatch. Finally, the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time) and the timer TIM_FDF is initiated to expire at the limit date for filling the destination fields.
+
+
+## Origin is import and the e-AD is inconsistent with the import data
+
+<a href="../../images/<%= phase_dir %>/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" target="_blank"><img src="../../images/<%= phase_dir %>/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" alt="A process map describing a scenario where the origin is import and the e-AD is inconsitent with the import data"></a>
+<a href="../../images/<%= phase_dir %>/3-Origin-is-import-and-the-e-AD-is-inconsistent-with-the-import-data.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import.
+
+The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD (IE815: N_EAD_SUB) to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has found inconsistencies and notifies the MSA dispatch application with a rejection message (IE839: C_CUS_REJ) and the MSA dispatch application forwards the message to the Consignor.
+
+## Origin is import and the destination is known
+
+<a href="../../images/<%= phase_dir %>/4-Origin-is-import-and-the-destination-is-known.png" target="_blank"><img src="../../images/<%= phase_dir %>/4-Origin-is-import-and-the-destination-is-known.png" alt="A process map describing a scenario where the origin is import and the destination is known"></a>
+<a href="../../images/<%= phase_dir %>/4-Origin-is-import-and-the-destination-is-known.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import and the destination of the movement is known (i.e. the destination is not unknown nor it is for export). This scenario begins with the same sequence as the above scenario, only in this case the consistency with the import data is confirmed thus the MSA dispatch application and the validated e-AD is registered.
+
+In particular, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has not found any inconsistencies and notifies the MSA dispatch application with an acceptance message (IE815: N_EAD_SUB).
+
+The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-AD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-AD and sets the state of the e-AD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-AD (IE801: C_EAD_VAL) to the Consignee.
+
+## Origin is import and the destination is unknown
+
+<a href="../../images/<%= phase_dir %>/5-Origin-is-import-and-the-destination-is-unknown.png" target="_blank"><img src="../../images/<%= phase_dir %>/5-Origin-is-import-and-the-destination-is-unknown.png" alt="A process map describing a scenario where the origin is import and the destination is unknown"></a>
+<a href="../../images/<%= phase_dir %>/5-Origin-is-import-and-the-destination-is-unknown.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is import and the destination of the movement is unknown in accordance with Article 22 of Directive 2020/262. This scenario begins with the same sequence as the above scenario, only in this case the consistency with the import data is confirmed thus the MSA dispatch application and the validated e-AD is registered.
+
+In particular, the Consignor submits a draft e-AD (IE815: N_EAD_SUB) to the MSA dispatch application. The MSA dispatch application upon receiving the draft e-AD performs the relevant validations, which pass successfully. The MSA dispatch application forwards the draft e-AD to Customs office and/or application to confirm consistency with the import data. The Customs office and/or application has found the draft e-AD (IE815: N_EAD_SUB) to be consistent with the import data and notifies the MSA dispatch application with an acceptance message (IE815: N_EAD_SUB).
+
+The MSA dispatch application assigns an ARC to the e-AD (the structure of ARC is defined in rule ['R030'](rules.html#r030) and the Check Digit algorithm in section ‘Design Principles’ of the DDNEA main document) and creates a validated e-AD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the Consignor. The validated e-AD (IE801: C_EAD_VAL) is stored by the MSA dispatch application in the “Accepted” state at the MSA of Dispatch. Finally, the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time) and the timer TIM_FDF is initiated to expire at the limit date for filling the destination fields.
+
+## Origin is Duty Paid and the destination is known
+
+<a href="../../images/<%= phase_dir %>/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" target="_blank"><img src="../../images/<%= phase_dir %>/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" alt="A process map describing a scenario where the origin is duty paid and the destination is known"></a>
+<a href="../../images/<%= phase_dir %>/6-Origin-is-Duty-Paid-and-the-destination-is-known.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignor submits a draft e-SAD (IE815: N_EAD_SUB) to the MSA dispatch application. The origin of the movement is a Duty Paid and the destination of the movement is known (i.e. for Duty Paid B2B movements, the destination is always known).
+
+The MSA dispatch application upon receiving the draft e-SAD performs the relevant validations, which pass successfully. The MSA dispatch application assigns an ARC to the e-SAD (the structure of ARC and the Check Digit algorithm are defined in rule ['R030'](rules.html#r030) of the Excise BPMs) and creates a validated e-SAD (IE801: C_EAD_VAL) with sequence number “1” that disseminates to the MSA destination application and to the Consignor. Finally, the state of the movement at the MSA of Dispatch is set to “Accepted” and the timer TIM_EAD_ESAD is initiated to expire at the expected end of the movement (i.e. date of dispatch plus journey time).
+
+Upon the reception of the validated e-SAD (IE801: C_EAD_VAL) from the MSA dispatch application, the MSA destination application stores the e-SAD and sets the state of the e-SAD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-SAD (IE801: C_EAD_VAL) to the Consignee.
+
+
+## e-AD/e-SAD alerted
+
+<a href="../../images/<%= phase_dir %>/7-e-ADe-SAD-alerted.png" target="_blank"><img src="../../images/<%= phase_dir %>/7-e-ADe-SAD-alerted.png" alt="A process map describing a scenario where the e-AD or e-SAD is alerted"></a>
+<a href="../../images/<%= phase_dir %>/7-e-ADe-SAD-alerted.png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignee submits an alert (IE819: C_REJ_DAT) to the MSA destination application. The Consignee has provided the ARC and the last sequence number of the movement that he/she alerts, which is in the “Accepted” for both the MSA of Dispatch and the MSA of Destination.
+
+The MSA destination application upon receiving the alert (IE819: C_REJ_DAT) performs the relevant validations, which pass successfully. The MSA destination does not alter the state of the concerned e-AD/e-SAD and forwards the alert (IE819: C_REJ_DAT) to the MSA dispatch application. Finally, the MSA destination application sends back the validated alert to the Consignee as a confirmation.
+
+Upon the reception of the alert (IE819: C_REJ_DAT) the MSA dispatch application does not alter the state of the concerned e-AD/e-SAD and forwards the alert (IE819: C_REJ_DAT) to the Consignor.
+
+## e-AD/e-SAD rejected
+
+<a href="../../images/<%= phase_dir %>/8-e-ADe-SAD-rejected..png" target="_blank"><img src="../../images/<%= phase_dir %>/8-e-ADe-SAD-rejected..png" alt="A process map describing a scenario where the e-AD or e-SAD is rejected"></a>
+<a href="../../images/<%= phase_dir %>/8-e-ADe-SAD-rejected..png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignee submits a rejection (IE819: C_REJ_DAT) to the MSA destination application. The Consignee has provided the ARC of the movement and the last sequence number that he/she rejects, which is in the “Accepted” for both the MSA of Dispatch and the MSA of Destination.
+
+The MSA destination application upon receiving the rejection (IE819: C_REJ_DAT) performs the relevant validations, which pass successfully. The MSA destination application sets the state of the movement at the MSA of Destination to “Rejected” and forwards the rejection (IE819: C_REJ_DAT) to the MSA dispatch application. Finally, the MSA destination application sends back the validated rejection to the Consignee as a confirmation.
+
+Upon the reception of the rejection (IE819: C_REJ_DAT) the MSA dispatch application sets the state of the movement at the MSA of Dispatch to “Rejected” and forwards the rejection to the Consignor. The Consignor is expected to change the e-AD/e-SAD destination, split the e-AD, or cancel the e-AD as a response to the rejection and the MSA dispatch application initiates the TIM_CHS timer, which once elapsed, will send a reminder to the Consignor.
+
+Please note that the “Rejected” state is not a final state and the Consignor is expected to take actions such that the e-AD/e-SAD will finally reach a final state.
+
+## Cancellation of an e-AD by the Consignor
+
+<a href="../../images/<%= phase_dir %>/9-Cancellation-of-an-e-AD-by-the-Consignor.png" target="_blank"><img src="../../images/<%= phase_dir %>/9-Cancellation-of-an-e-AD-by-the-Consignor.png" alt="A process map describing a scenario where the e-AD is cancelled by the Consignor"></a>
+<a href="../../images/<%= phase_dir %>/9-Cancellation-of-an-e-AD-by-the-Consignor.png" target="_blank">Open process map in a new tab.</a>
+
+This scenario assumes that all validations of the incoming messages pass successfully.
+
+Anytime before the actual dispatch of goods, the Consignor may send a cancellation message (IE810: C_CAN_DAT) to the MSA dispatch application concerning an e-AD in the “Accepted” or “Rejected” or “Exporting” (only for the case that the draft e-AD has been submitted for “Local clearance at export”) or “Accepted for Export” state.
+
+The MSA dispatch application receives the draft e-AD cancellation for validation (IE810: C_CAN_DAT). Upon successful validation of the incoming message, the MSA dispatch application updates the state of the e-AD to “Cancelled” and forwards the cancellation notification (IE810: C_CAN_DAT) to the MSA destination application and back to the Consignor.
+
+If the timer associated with the cancelled e-AD (TIM_EAD_ESAD) has already expired at the limit date, the MSA dispatch application resets the flag that has been raised locally at expiration time. In the opposite case, if the timer (TIM_EAD_ESAD) associated with the cancelled e-AD is still running, the MSA dispatch application stops it.
+
+The MSA destination application receives the cancellation notification message for validation (IE810: C_CAN_DAT). Upon successful validation of the incoming message, the MSA destination application changes the state of the e-AD to “Cancelled” and forwards the cancellation notification (IE810: C_CAN_DAT) to the Consignee.
+
+The cancellation of an e-AD is always a final operation and the movement state at the MSA dispatch and destination applications is updated to “Cancelled”, which is a final state.
+
+
+## Submission of e-AD of which delivery is “Accepted” (with or without shortages)
+
+<a href="../../images/<%= phase_dir %>/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank"><img src="../../images/<%= phase_dir %>/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" alt="A process map describing a scenario where an e-AD with a delivery status of “Accepted” is submitted"></a>
+<a href="../../images/<%= phase_dir %>/10-Submission-of-e-AD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignee submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating delivery acceptance to the MSA destination application that subsequently validates successfully the structure and the message content. Then the MSA destination application changes the state of the e-AD at MSA of Destination to “Delivered”, which is a final state, and forwards the validated Report of Receipt (IE818: C_DEL_DAT) to the MSA dispatch application. Finally, the MSA destination application sends back the validated RoR to the Consignee as a confirmation.
+
+Upon the reception of delivery notification message (IE818: C_DEL_DAT), the MSA dispatch application validates successfully the received message and changes the state of the e-AD to “Delivered”, which is a final state. In addition, the MSA dispatch application forwards the delivery notification (IE818: C_DEL_DAT) to the Consignor to inform him/her for the acceptance of delivery and in series the discharge of the movement. Finally, if the TIM_EAD_ESAD timer has not expired, the MSA dispatch application stops it otherwise it resets the flag raised locally at its expiration.
+
+
+## Submission of e-SAD of which delivery is “Accepted” (with or without shortages)
+
+<a href="../../images/<%= phase_dir %>/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank"><img src="../../images/<%= phase_dir %>/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" alt="A process map describing a scenario where an e-SAD with a delivery status of “Accepted” is submitted"></a>
+<a href="../../images/<%= phase_dir %>/11-Submission-of-e-SAD-of-which-delivery-is-“Accepted”-(with-or-without-shortages).png" target="_blank">Open process map in a new tab.</a>
+
+According to this scenario, the Consignee submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating delivery acceptance to the MSA destination application that subsequently validates successfully the structure and the message content. Then the MSA destination application changes the state of the e-SAD at MSA of Destination to “Delivered”, which is a final state. However, contrary to the processing of a Report of Receipt for a Duty Suspension movement, the Report of Receipt (IE818: C_DEL_DAT) for a Duty Paid B2B movement is not automatically forwarded to the MSA dispatch application. The MSA of Destination performs any necessary formalities to ensure that the consignee has fulfilled all his/her legal obligations (e.g. payment of excise duty), before forwarding the Report of Receipt for a duty paid B2B movement to the MSA of Dispatch. Therefore, it shall be noted that since there are additional fiscal formalities to be handled by the MSA destination application upon the reception of the Report of Receipt (IE818: C_DEL_DAT) from the Consignee, there may be a delay in the sending of the Report of Receipt (IE818: C_DEL_DAT) from the MSA destination application to the MSA dispatch application. Once the applicable fiscal formalities are handled, the MSA destination application sends back the validated RoR to the Consignee as a confirmation that the consignee has taken delivery of the goods and that all required formalities have been fulfilled at destination.
+
+Upon the reception of the delivery notification message (IE818: C_DEL_DAT), the MSA dispatch application validates successfully the received message and changes the state of the e-SAD to “Delivered”, which is a final state. In addition, the MSA dispatch application forwards the delivery notification (IE818: C_DEL_DAT) to the Consignor to inform him/her for the acceptance of delivery and in series the discharge of the movement. Finally, if the TIM_EAD_ESAD timer has not expired, the MSA dispatch application stops it otherwise it resets the flag raised locally at its expiration.
+
+## Submission of e-AD/e-SAD of which delivery is “refused” 
+
+<a href="../../images/<%= phase_dir %>/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" target="_blank"><img src="../../images/<%= phase_dir %>/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" alt="A process map describing a scenario where an e-AD or e-SAD with a delivery status of “Refused” is submitted"></a>
+<a href="../../images/<%= phase_dir %>/12-Submission-of-e-ADe-SAD-of-which-delivery-is-“refused” .png" target="_blank">Open process map in a new tab.</a>
+
+If the Consignee submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating refusal of delivery to the MSA destination application, the latter validates successfully the structure and the message content. Then the MSA destination application changes the state of the e-AD/e-SAD at MSA of Destination to “Refused” and forwards the validated Report of Receipt (IE818: C_DEL_DAT) to the MSA dispatch application. Finally, the MSA destination application sends back the validated RoR to the Consignee as a confirmation.
+
+Upon the reception of the refusal of delivery notification message (IE818: C_DEL_DAT), the MSA dispatch application validates successfully the received message and changes the state of the e-AD/e-SAD to “Refused”. In addition, the MSA dispatch application forwards the delivery notification to the Consignor. Finally, the MSA dispatch application starts the timer TIM_CHS, which once elapsed, will send a reminder to the Consignor.
+
+Please note that the “Refused” state is not a final state and the Consignor is expected to take actions such that the e-AD/e-SAD will finally reach a final state.
+
+## Submission of e-AD of which delivery is partially refused
+
+<a href="../../images/<%= phase_dir %>/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" target="_blank"><img src="../../images/<%= phase_dir %>/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" alt="A process map describing a scenario where an e-AD with a delivery status of “partially refused” is submitted"></a>
+<a href="../../images/<%= phase_dir %>/13-Submission-of-e-AD-of-which-delivery-is-partially-refused.png" target="_blank">Open process map in a new tab.</a>
+
+If the Consignee submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating partial refusal of delivery to the MSA destination application, the latter validates successfully the structure and the message content. Then the MSA destination application changes the state of the e-AD at MSA of Destination to “Partially Refused” and forwards the validated Report of Receipt (IE818: C_DEL_DAT) to the MSA dispatch application. Finally, the MSA destination application sends back the validated RoR to the Consignee as a confirmation.
+
+Upon the reception of the partial refusal of delivery notification message (IE818: C_DEL_DAT), the MSA dispatch application validates successfully the received message and changes the state of the e-AD to “Partially Refused”. In addition, the MSA dispatch application forwards the delivery notification to the Consignor. Finally, the MSA dispatch application starts the timer TIM_CHS, which once elapsed, will send a reminder to the Consignor.
+
+Please note that the “Partially Refused” state is not a final state and the Consignor is expected to take actions such that the e-AD will finally reach a final state.
+
+## Submission of e-SAD of which delivery is partially refused
+
+<a href="../../images/<%= phase_dir %>/14-Submission-of-e-SAD-of-which-delivery-is-partially-refused.png" target="_blank"><img src="../../images/<%= phase_dir %>/14-Submission-of-e-SAD-of-which-delivery-is-partially-refused.png" alt="A process map describing a scenario where an e-SAD with a delivery status of “partially refused” is submitted"></a>
+<a href="../../images/<%= phase_dir %>/14-Submission-of-e-SAD-of-which-delivery-is-partially-refused.png" target="_blank">Open process map in a new tab.</a>
+
+If the Consignee submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating partial refusal of delivery to the MSA destination application, the latter validates successfully the structure and the message content. Then the MSA destination application changes the state of the e-SAD at MSA of Destination to “Partially Refused”. However, contrary to the processing of a Report of Receipt for a Duty Suspension movement, the Report of Receipt (IE818: C_DEL_DAT) for a Duty Paid B2B movement is not automatically forwarded to the MSA dispatch application. The MSA of Destination performs any necessary formalities to ensure that the consignee has fulfilled all his/her legal obligations (e.g. payment of excise duty), before forwarding the Report of Receipt for a duty paid B2B movement to the MSA of Dispatch. Therefore, it shall be noted that since there are additional fiscal formalities to be handled by the MSA destination application upon the reception of the Report of Receipt (IE818: C_DEL_DAT) from the Consignee, there may be a delay in the sending of the Report of Receipt (IE818: C_DEL_DAT) from the MSA destination application to the MSA dispatch application. Once the applicable fiscal formalities are handled, the MSA destination application sends back the validated RoR to the Consignee as a confirmation.
+
+Upon the reception of the partial refusal of delivery notification message (IE818: C_DEL_DAT), the MSA dispatch application validates successfully the received message and changes the state of the e-SAD to “Partially Refused”. In addition, the MSA dispatch application forwards the delivery notification to the Consignor. Finally, the MSA dispatch application starts the timer TIM_CHS, which once elapsed, will send a reminder to the Consignor.
+
+Please note that the “Partially Refused” state is not a final state and the Consignor is expected to take actions such that the e-SAD will finally reach a final state.
+
+## Change of MS of Destination
+
+<a href="../../images/<%= phase_dir %>/15-Change-of-MS-of-Destination.png" target="_blank"><img src="../../images/<%= phase_dir %>/15-Change-of-MS-of-Destination.png" alt="A process map describing a scenario where the member state of destination changes"></a>
+<a href="../../images/<%= phase_dir %>/15-Change-of-MS-of-Destination.png" target="_blank">Open process map in a new tab.</a>
+
+The Consignor initiates the change of destination process by submitting an update message (IE813: C_UPD_DAT) to change the MS of Destination. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it successfully. The MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC incremented by 1 (PreviousSeqNo + 1) in the validated update message (IE813: C_UPD_DAT) and sends it to the former MSA destination application as well as to the Consignor as an acknowledgement.
+
+In addition, the MSA dispatch application generates and sends to the new MSA of Destination an e-AD (IE801: C_EAD_VAL) that includes the following information:
+
+- The ARC of the update message (IE813: C_UPD_DAT), which is the same as in the original e-AD;
+- The sequence number of the ARC which is incremented by 1 (PreviousSeqNo + 1);
+- The updated destination details (new Consignee and Place of Delivery), as declared in the update message (IE813: C_UPD_DAT).
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the updated e-AD (IE801: C_EAD_VAL), the new MSA destination application receives and validates the e-AD. Assuming that the validation passes successfully, the new MSA destination application sends the e-AD (IE801: C_EAD_VAL) to the new Consignee to inform him that he is the new Consignee of the movement. Moreover, the new MSA destination application sets the state of the movement to “Accepted”.
+
+At the other side, the former MSA destination application validates the structure of the received update message (IE813: C_UPD_DAT). Assuming that the message structure validation passes successfully, the former MSA destination application sets the state of e-AD to “Diverted” and sends a notification message (IE803: C_EAD_NOT) with the same ARC and sequence number as in the update message (IE813: C_UPD_DAT) to the former Consignee to inform him that the movement has changed destination.
+
+## Change MS of Destination where the Consignor diverts a movement back to a (former) MSA of Destination
+
+<a href="../../images/<%= phase_dir %>/16-Change-MS-of-Destination-where-the-Consignor-diverts-a-movement-back-to-a-(former)-MSA-of-Destination.png" target="_blank"><img src="../../images/<%= phase_dir %>/16-Change-MS-of-Destination-where-the-Consignor-diverts-a-movement-back-to-a-(former)-MSA-of-Destination.png" alt="A process map describing a scenario where the consignor diverts a movement back to a (former) member state administration of destination"></a>
+<a href="../../images/<%= phase_dir %>/16-Change-MS-of-Destination-where-the-Consignor-diverts-a-movement-back-to-a-(former)-MSA-of-Destination.png" target="_blank">Open process map in a new tab.</a>
+
+The Consignor initiates the change of destination process by submitting an update message (IE813: C_UPD_DAT) to change the MS of Destination. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it successfully. The MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC incremented by 1 (PreviousSeqNo + 1) in the validated update message (IE813: C_UPD_DAT) and sends it to the former MSA destination application as well as to the Consignor as an acknowledgement.
+
+In addition, the MSA dispatch application generates and sends to the new MSA of Destination an e-AD (IE801: C_EAD_VAL) that includes the following information:
+
+- The ARC of the update message (IE813: C_UPD_DAT), which is the same as in the original e-AD;
+- The sequence number of the ARC which is incremented by 1 (PreviousSeqNo + 1);
+- The updated destination details (new Consignee and Place of Delivery), as declared in the update message (IE813: C_UPD_DAT).
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the updated e-AD (IE801: C_EAD_VAL), the new MSA destination application receives and validates the e-AD. Assuming that the validation passes successfully, the new MSA destination application sends the e-AD (IE801: C_EAD_VAL) to the new Consignee to inform him that he is the new Consignee of the movement. Moreover, the new MSA destination application sets the state of the movement to “Accepted”.
+
+At the other side, the former MSA destination application validates the structure of the received update message (IE813: C_UPD_DAT). Assuming that the message structure validation passes successfully, the former MSA destination application sets the state of e-AD to “Diverted” and sends a notification message (IE803: C_EAD_NOT) with the same ARC and sequence number as in the update message (IE813: C_UPD_DAT) to former Consignee to inform him that the movement has changed destination.
+
+Before the change of destination back to a former MSA of Destination it is possible that multiple actions have taken place. Changes of destination to other MSAs of Destinations may have been performed also. For simplicity it is assumed that no other (intermediate) changes of destination have occurred.
+
+The Consignor initiates the change of destination process by submitting an update message (IE813: C_UPD_DAT) to change the MS of Destination and set the new MS of Destination as (one of) the former MS(s) of Destination. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it successfully. The MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC (SeqNo = PreviousSeqNo + 2) in the validated update message (IE813: C_UPD_DAT) and sends it to the former MSA destination application as well as to the Consignor as an acknowledgement.
+
+In addition, the MSA dispatch application generates and sends to the new MSA of Destination (which was a former MSA of Destination) an e-AD (IE801: C_EAD_VAL) that includes the following information:
+
+- The ARC of the update message (IE813: C_UPD_DAT), which is the same as in the original e-AD;
+- The sequence number of the ARC which is incremented again by 1 (PreviousSeqNo + 2);
+- The updated destination details (new Consignee, which was a former Consignee and Place of Delivery), as declared in the update message (IE813: C_UPD_DAT).
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the updated e-AD (IE801: C_EAD_VAL), the new MSA destination application (which was a former MSA of Destination) receives and validates the e-AD. Assuming that the validation passes successfully, the new MSA destination application sends the e-AD (IE801: C_EAD_VAL) to the new Consignee (which was a former Consignee) to inform him that he is the new Consignee of the movement. Moreover, the new MSA destination application sets the state of the movement to “Accepted”.
+
+At the other side, the former MSA destination application validates the structure of the received update message (IE813: C_UPD_DAT). Assuming that the message structure validation passes successfully, the former MSA destination application sets the state of e-AD to “Diverted” and sends a notification message (IE803: C_EAD_NOT) with the same ARC and sequence number as in the update message (IE813: C_UPD_DAT) to the former Consignee to inform him that the movement has changed destination.
+
+Although the state remains open (in “Diverted” state) at the former MSA of Destination, the latter can be acknowledged of the status at the MSA of Dispatch through the Manual Status Request/Response. In case the Manual Status Response (IE905) to this request (IE904) proves that the e-AD at the MSA of Dispatch is in a final state, then the former MSA of Destination can drive this e-AD to the corresponding final state using its own means. It is the responsibility of the former MSA of Destination to ensure that the movement is not closed at the MSA of Dispatch, since it will still be possible to divert back to its territory.
+
+## Return to the tax warehouse of dispatch
+
+<a href="../../images/<%= phase_dir %>/17-Return-to-the-tax-warehouse-of-dispatch.png" target="_blank"><img src="../../images/<%= phase_dir %>/17-Return-to-the-tax-warehouse-of-dispatch.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/17-Return-to-the-tax-warehouse-of-dispatch.png" target="_blank">Open process map in a new tab.</a>
+
+The Consignor initiates the change of destination process by submitting an update message (IE813: C_UPD_DAT) for return of goods thus changing the MS of Destination. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it successfully. The MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC incremented by 1 (PreviousSeqNo + 1) in the validated update message (IE813: C_UPD_DAT) and sends it to the MSA destination application as well as to the Consignor as an acknowledgement.
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the update message (IE813: C_UPD_DAT), the MSA destination application validates the structure of the received message. Assuming that the message structure validation passes successfully, the MSA destination application sets the state of e-AD to “Diverted” and sends a notification message (IE803: C_EAD_NOT) with the same ARC and sequence number as in the update message (IE813: C_UPD_DAT) to the Consignee to inform him that the movement has changed destination.
+
+To complete the return to the tax warehouse of dispatch and discharge the e-AD, the Consignor submits a draft Report of Receipt (IE818: C_DEL_DAT) indicating delivery acceptance to the MSA dispatch application. The message structure and content are validated by the MSA dispatch application that complete successfully. Then the MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Delivered”, which is a final state. Finally, the MSA dispatch application sends back the validated RoR to the Consignor as a confirmation.
+
+## Change of Consignee following the Submission of e-AD/e-SAD (MS of Destination unchanged)
+
+<a href="../../images/<%= phase_dir %>/18-Change-of-Consignee-following-the-Submission-of-e-ADe-SAD-(MS-of-Destination-unchanged).png" target="_blank"><img src="../../images/<%= phase_dir %>/18-Change-of-Consignee-following-the-Submission-of-e-ADe-SAD-(MS-of-Destination-unchanged).png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/18-Change-of-Consignee-following-the-Submission-of-e-ADe-SAD-(MS-of-Destination-unchanged).png" target="_blank">Open process map in a new tab.</a>
+
+The Consignor initiates the change of destination process to change the Consignee (hence, the Place of Delivery as well) and not the MS of Destination. In that case, the Consignor sends the draft update (IE813: C_UPD_DAT) for validation to the MSA dispatch application. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it. Assuming that the draft update is valid, the MSA dispatch application changes the state of the e-AD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC incremented by 1 (PreviousSeqNo + 1) in the validated update message (IE813: C_UPD_DAT) and sends it to the Consignor as an acknowledgement.
+
+In addition, the MSA dispatch application sends to the unchanged MSA of Destination an e-AD (IE801: C_EAD_VAL) that includes the following information:
+
+- The ARC of the update message (IE813: C_UPD_DAT) ;
+- The sequence number of the ARC which is incremented by 1 (PreviousSeqNo + 1);
+- The updated destination details (new Consignee and Place of Delivery), as declared in the update message (IE813: C_UPD_DAT).
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the e-AD (IE801: C_EAD_VAL), the MSA destination application validates the structure of the received e-AD (IE801: C_EAD_VAL). In addition, the MSA destination application checks whether the same e-AD (IE801: C_EAD_VAL) instance (same ARC and same “(HEADER) E-AD/E-SAD.Sequence Number”) has already been received. Assuming that the message structure validation passes successfully and that the e-AD (IE801: C_EAD_VAL) instance is unique (it contains a unique “(HEADER) E-AD/E-SAD.Sequence Number”), the MSA destination application accepts and processes the message. The MSA destination application changes the state of the e-AD at MSA of Destination to “Accepted”.
+
+Finally, the MSA destination application sends:
+
+- A notification message (IE803: C_EAD_NOT) with the same sequence number as in the update message (IE813: C_UPD_DAT) to the former Consignee to inform him that the consignment has changed destination;
+- The e-AD (IE801: C_EAD_VAL) to the new Consignee to notify him that he is the new Consignee of the consignment.
+
+## Change of Place of Delivery following the Submission of e-AD/e-SAD (Consignee unchanged)
+
+<a href="../../images/<%= phase_dir %>/19-Change-of-Place-of-Delivery-following-the-Submission-of-e-ADe-SAD-(Consignee-unchanged).png" target="_blank"><img src="../../images/<%= phase_dir %>/19-Change-of-Place-of-Delivery-following-the-Submission-of-e-ADe-SAD-(Consignee-unchanged).png" alt="A process map describing a scenario where"></a>
+
+The Consignor initiates the change of destination process to change the Place of Delivery. In that case, the Consignor sends the draft update (IE813: C_UPD_DAT) for validation to the MSA dispatch application. The MSA dispatch application receives the draft update message (IE813: C_UPD_DAT) and validates it successfully. The MSA dispatch application changes the state of the e-AD/e-SAD at MSA of Dispatch to “Accepted”.
+
+The MSA dispatch application includes the last sequence number of the ARC incremented by 1 (PreviousSeqNo + 1) in the validated update message (IE813: C_UPD_DAT) and submits it to the MSA destination application and to the Consignor as acknowledgement.
+
+Finally, in case the journey time has changed, the MSA dispatch application updates the TIM_EAD_ESAD timer if the expected end of the movement is still in the future or first resets the flag that has been raised locally at expiration time and then restarts the timer if the expected end of the movement is in the past.
+
+Upon the reception of the update message (IE813: C_UPD_DAT), the MSA destination application validates the structure of the received message. The MSA destination application changes the state of the e-AD/e-SAD at MSA of Destination to “Accepted” and forwards the update message (IE813: C_UPD_DAT) to the Consignee.
+
+## Splitting of Consignment
+
+<a href="../../images/<%= phase_dir %>/20-Splitting-of-Consignment.png" target="_blank"><img src="../../images/<%= phase_dir %>/20-Splitting-of-Consignment.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/20-Splitting-of-Consignment.png" target="_blank">Open process map in a new tab.</a>
+
+The basic scenario of the splitting operation begins as soon as the Consignor submits a draft splitting operation (IE825: E_SUPL_SUB) to the MSA dispatch application concerning an e-AD in the “Accepted”, “Refused”, “Partially refused”, “Rejected”, or “Exporting” state. The Consignor is waiting for a notification message (IE803: C_EAD_NOT) to be received from the MSA dispatch application as well as the new e-ADs (IE801: C_EAD_VAL).
+
+The MSA dispatch application receives the draft splitting operation (IE825: E_SUPL_SUB). Upon successful validation of the incoming message, the MSA dispatch application updates the state of the e-AD to “Replaced” and forwards a notification message (IE803: C_EAD_NOT) to the former MSA destination application and back to the Consignor. The sequence number of the ARC in the notification message (IE803: C_EAD_NOT) is the last sequence number for the replaced e-AD. In case the destination of the initial e-AD is unknown, the MSA dispatch application will not forward a notification message (IE803: C_EAD_NOT) to the former MSA destination application.
+
+If any timers associated with the e-AD to be split have already expired at the limit date, the MSA dispatch application resets their flag that has been raised locally at expiration time. If any timers associated with the e-AD to be split are still running, the MSA dispatch application stops them.
+
+The MSA dispatch application creates new e-ADs according to the information of the draft splitting operation (IE825: E_SUPL_SUB). For each of the created e-ADs the MSA dispatch application assigns an ARC to the e-ADs and creates a validated e-AD (IE801: C_EAD_VAL). The state of each new e-AD at the MSA dispatch application is set to “Accepted”. In addition, for each new e-AD the timer TIM_EAD_ESAD is initiated to expire at the expected end of movement (i.e. date of dispatch plus journey time). At most one of the created e-ADs may have unknown destination in which case the MSA dispatch application initiates the timer TIM_FDF to expire at the limit date for filling the destination fields.
+
+If one of the created e-ADs contains the same destination information as the initial e-AD and the destination is not unknown, then the MSA dispatch application forwards the created e-AD (IE801: C_EAD_VAL) to the former MSA destination application. For each of the created e-ADs having different destination information as the initial e-AD and having the destination not unknown the MSA dispatch application forwards the created e-AD (IE801: C_EAD_VAL) to the new MSA destination applications (i.e. one for each new MSA destination application).
+
+If the destination of the initial e-AD is not unknown, then the former MSA destination application has received a notification message (IE803: C_EAD_NOT) from the MSA dispatch application. In that case the MSA destination application validates the notification message (IE803: C_EAD_NOT). Upon successful validation of the incoming message, the MSA destination application changes the state of the e-AD to “Replaced” and forwards the cancellation notification (IE803: C_EAD_NOT) to the former Consignee.
+
+If one of the created e-ADs contains the same destination information as the initial e-AD and the destination is not unknown, then the former MSA destination application has received a created e-AD (IE801: C_EAD_VAL) from the MSA dispatch application. In that case the MSA destination application validates the created e-AD (IE801: C_EAD_VAL). Upon successful validation of the incoming message, the MSA destination application registers the e-AD as “Accepted” and forwards the e-AD (IE801: C_EAD_VAL) to the former Consignee.
+
+For each of the created e-ADs having different destination information as the initial e-AD and having the destination not unknown there is a new MSA destination application instance. The scenario description shall henceforth refer to the new MSA destination application actor for each of these instances.
+
+Upon the reception of the created e-AD (IE801: C_EAD_VAL) from the MSA dispatch application, the new MSA destination application stores the e-AD and sets the state of the e-AD at MSA of Destination to “Accepted”. Finally, the MSA destination application forwards the e-AD (IE801: C_EAD_VAL) to the Consignee.
+
+## Status Request/Response after the TIM_EAD_ESAD timer expiration - Reminder for RoR
+
+<a href="../../images/<%= phase_dir %>/21-Status-RequestResponse-after-the-TIM_EAD_ESAD-timer-expiration---Reminder-for-RoR.png" target="_blank"><img src="../../images/<%= phase_dir %>/21-Status-RequestResponse-after-the-TIM_EAD_ESAD-timer-expiration---Reminder-for-RoR.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/21-Status-RequestResponse-after-the-TIM_EAD_ESAD-timer-expiration---Reminder-for-RoR.png" target="_blank">Open process map in a new tab.</a>
+
+The scenario described includes the triggering of automatic Status Request/Response by the MSA dispatch application to examine why the TIM_EAD_ESAD timer expired without receiving the RoR. This mechanism enables the MSA dispatch application to identify when the RoR has not been received due to technical problems, or when the RoR has not been sent by the Consignee within the allocated time, or when the RoR has not been sent due to the delay of fulfilment of formalities at destination after the submission of the IE818 message from the Consignee to MSA of Destination.
+
+This scenario assumes that all message validations pass successfully.
+
+When the TIM_EAD_ESAD timer expires, the MSA dispatch application sends a Status Request (IE904: C_STD_REQ) to the MSA destination application for the specific ARC by including the sequence number of the last business (event) message sent to the MSA of Destination and the information that the e-AD/e-SAD at MSA of Dispatch is found on the “Accepted” state. The last message received from the MSA destination application may be none or an alert or rejection (IE819: C_REJ_DAT).
+
+The MSA destination application receives the Status Request (IE904: C_STD_REQ) and examines the contained information. The MSA destination application responds to that request with the Status Response (IE905: C_STD_RSP) message mentioning the last known sequence number of the movement and that the MSA destination application is found on the “Accepted” state.
+
+It may be the case that the state of the MSA destination application has sent the Report of Receipt, but the MSA dispatch application has not received the RoR message. In this case the Status Response (IE905: C_STD_RSP) sent by the MSA destination application will contain either the “Delivered”, the “Refused” or the “Partially Refused” state.
+
+Upon the reception and successful validation of the Status Response (IE905: C_STD_RSP) from the MSA destination application, the MSA dispatch application understands that the Consignee has not sent the RoR within the allocated time. Hence, the MSA dispatch application automatically flags the concerned e-AD/e-SAD to allow further retrieval for examination by verification officers and generates a reminder/flagging message (IE802: C_EXC_REM) that is sent to the Consignor and to the MSA destination application as a notification of the RoR delay.
+
+Upon reception and successful validation of the flagging message (IE802: C_EXC_REM), the MSA destination application automatically flags the concerned e-AD/e-SAD to allow further retrieval for examination by verification officers and forwards it (optionally), if relevant, to the Consignee to provide his/her own explanations on the delay.
+
+At this point of the scenario, the Consignor and optionally the Consignee have been notified that the arrival of a consignment is late. The scenario may optionally continue with the submission of explanations on delay for delivery by either the Consignor or the Consignee. Alternatively, the scenario may end here:
+
+- if the Consignor submits a late e-AD cancellation provided that the consignment has not left the Place of Dispatch, as described in section II.I.3 Cancellation of an e-AD by the Consignor (L4-CORE-01-10);
+- if the Consignee sends the expected RoR, as described in section II.I.4 Submission of Report of Receipt (L4-CORE-01-02);
+- if the Consignor submits a change of destination, as described in section II.I.5 Change of Destination (L4-CORE-01-12);
+- if the Consignor splits the consignment, provided that the consignment contains energy products as described in section II.I.5 Change of Destination (L4-CORE-01-12).
+
+## Submission of explanations on delay for delivery - Reminder for RoR
+
+<a href="../../images/<%= phase_dir %>/22-Submission-of-explanations-on-delay-for-delivery---Reminder-for-RoR.png" target="_blank"><img src="../../images/<%= phase_dir %>/22-Submission-of-explanations-on-delay-for-delivery---Reminder-for-RoR.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/22-Submission-of-explanations-on-delay-for-delivery---Reminder-for-RoR.png" target="_blank">Open process map in a new tab.</a>
+
+This scenario is complementing the previous scenario for sending reminder message after expiry of the time limit for Report of Receipt. According to the previous scenario the Consignor and optionally the Consignee have been notified that the arrival of a consignment is late.
+
+This scenario assumes that all message validations pass successfully.
+
+The Consignor and/or the Consignee may optionally submit an explanation message (IE837:C_DEL_EXP) to the MSA dispatch or destination application, respectively. It shall be noted that in exceptional cases, an explanation message (IE837: C_DEL_EXP) could be proactively sent in advance (I.e. prior to the sending of the IE802 message), so as to notify the Member State of Dispatch of an expected delay in the submission of the Report of Receipt (e.g. in case of public holidays, strikes etc.). Both cases are covered with one scenario using actor instantiations. The “Consignor / Consignee” instance of the Economic operator actor should be considered as either the Consignor or the Consignee actor. The “dispatch / destination” and the “destination / dispatch” instance of the MSA application actor should be considered as either the MSA dispatch application or the MSA destination application actor.
+
+If the scenario is initiated by the Consignor, then “dispatch / destination : MSA application” should be considered as the MSA dispatch application and the “destination / dispatch : MSA application” should be considered as the MSA destination application. If the scenario is initiated by the Consignee, then “dispatch / destination : MSA application” should be considered as the MSA destination application and the “destination / dispatch : MSA application” should be considered as the MSA dispatch application.
+
+The Consignor / Consignee Economic operator submits explanations on delay for delivery (IE837: C_DEL_EXP) to the dispatch / destination MSA application for a consignment having late delivery.
+
+The dispatch / destination MSA application receives the explanations on delay for delivery (IE837: C_DEL_EXP) and performs validation. Upon successful validation, the dispatch / destination MSA application forwards the incoming explanations on delay for delivery (IE837: C_DEL_EXP) message to the destination / dispatch MSA application.
+
+The destination / dispatch MSA application validates the message structure of the received explanations on delay for delivery (IE837: C_DEL_EXP).
+
+It is to be noted that when the Consignee has initiated this scenario the provision of explanations does not relieve the Consignee from his/her obligation to submit the RoR as soon as possible.
+
+## Sending reminder message after expiry of the change of destination timer
+
+<a href="../../images/<%= phase_dir %>/23-Sending-reminder-message-after-expiry-of-the-change-of-destination-timer.png" target="_blank"><img src="../../images/<%= phase_dir %>/23-Sending-reminder-message-after-expiry-of-the-change-of-destination-timer.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/23-Sending-reminder-message-after-expiry-of-the-change-of-destination-timer.png" target="_blank">Open process map in a new tab.</a>
+
+For the cases when the delivery of a consignment has been refused or partially refused or the e-AD/e-SAD has been rejected  by the Consignee, then the MSA dispatch application has already initiated the TIM_CHS timer. In all of the three aforementioned cases the Consignor is expected to either:
+
+- initiate the change of destination process; or
+- initiate the splitting of consignment process (only applicable for e-AD); or
+- initiate the cancellation of an e-AD process (only applicable for e-AD)
+
+If any of the aforementioned processes is performed by the Consignor, the MSA dispatch application will reset the TIM_CHS timer or stop it as described in the corresponding scenarios. If, however, none of the aforementioned processes is performed by the Consignor, the TIM_CHS timer will expire at the MSA dispatch application, which is the opening action of this use case and consequently of this scenario.
+
+The MSA dispatch application flags the e-AD/e-SAD so that it can set the timer when expired. The implementation mechanism of the flag depends on the national system to be developed. Finally, the MSA dispatch application sends a reminder (IE802: C_EXC_REM) to the Consignor. This reminder will include the ARC of the movement that has been refused or partially refused, the identity of the declared Consignee and the limit date that the Consignor should respond.
+
+## Sending reminder message after expiration of the time limit to update the destination fields
+
+<a href="../../images/<%= phase_dir %>/24-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields.png" target="_blank"><img src="../../images/<%= phase_dir %>/24-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/24-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields.png" target="_blank">Open process map in a new tab.</a>
+
+After the TIM_FDF timer expiration, the MSA dispatch application sends a reminder (IE802: C_EXC_REM) to the Consignor. This reminder will include the ARC of the consignment with unknown destination and the limit date that the Consignor should respond.
+
+The Consignor’s response may be the change of destination, the splitting or the cancellation of the movement. In this case the scenario ends here and is complemented by the scenarios corresponding to the Consignor’s response. Alternatively, the Consignor may send an explanations message with the reasons not to update the e-AD.
+
+## Sending reminder message after expiration of the time limit to update the destination fields with Consignor explanations
+
+<a href="../../images/<%= phase_dir %>/25-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields-with-Consignor-explanations.png" target="_blank"><img src="../../images/<%= phase_dir %>/25-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields-with-Consignor-explanations.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/25-Sending-reminder-message-after-expiration-of-the-time-limit-to-update-the-destination-fields-with-Consignor-explanations.png" target="_blank">Open process map in a new tab.</a>
+
+After the TIM_FDF timer expiration, the MSA dispatch application sends a reminder (IE802: C_EXC_REM) to the Consignor. This reminder will include the ARC of the consignment with unknown destination and the limit date that the Consignor should respond.
+
+The Consignor may send an explanations message (IE837: C_DEL_EXP) with the reasons not to update the e-AD to the MSA dispatch application. The MSA dispatch application receives the explanations message (IE837: C_DEL_EXP) and performs validation. Upon successful validation of the incoming message, the MSA dispatch application makes the message information available for examination by verification officers.
+
+## Complementary explanations submission
+
+<a href="../../images/<%= phase_dir %>/26-Complementary-explanations-submission.png" target="_blank"><img src="../../images/<%= phase_dir %>/26-Complementary-explanations-submission.png" alt="A process map describing a scenario where"></a>
+<a href="../../images/<%= phase_dir %>/26-Complementary-explanations-submission.png" target="_blank">Open process map in a new tab.</a>
+
+If the scenario is initiated by the Consignor, then “dispatch / destination : MSA application” should be considered as the MSA dispatch application and the “destination / dispatch : MSA application” should be considered as the MSA destination application. If the scenario is initiated by the Consignee, then “dispatch / destination : MSA application” should be considered as the MSA destination application and the “destination / dispatch : MSA application” should be considered as the MSA dispatch application.
+
+The Consignor / Consignee Economic operator submits complementary explanations (IE871: C_SHR_EXP) to the dispatch / destination MSA application for an e-AD that shortages or excesses have been declared.
+
+The dispatch / destination MSA application receives the complementary explanations (IE871: C_SHR_EXP) and performs validation. Upon successful validation (exceptional cases are described in Sub-Section II.VI), the dispatch / destination MSA application forwards the incoming complementary explanations (IE871: C_SHR_EXP) message to the destination / dispatch MSA application.
+
+The destination / dispatch MSA application validates the message structure of the received complementary explanations (IE871: C_SHR_EXP).
+
+## Other process flows
+
+If you need a process flow that is not described here, you should use the [process flows in the existing DDNEA documentation](https://www.gov.uk/government/publications/emcs-functional-stage-31-fs31-technical-specifications). Ignore any references to SOAP or SOAP envelopes, the new API is RESTful.
