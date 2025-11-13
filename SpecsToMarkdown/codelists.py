@@ -16,7 +16,7 @@ class CodeList():
     def __init__(self, h2):
         self.name = h2.text
         p = h2.find_next_sibling('p')
-        self.format = p.text.removeprefix('Format ').strip()
+        self.format = p.text.removeprefix('Format').strip()
         self.context = p.find_next_sibling('p').find_all('span')[1].text
         trs = p.find_next_sibling('table').findChildren('tr')[1:]
         self.codes = []

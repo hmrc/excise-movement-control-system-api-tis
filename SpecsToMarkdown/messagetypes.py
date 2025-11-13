@@ -10,13 +10,13 @@ def getIssueDate(soup):
     field_title = soup.find(lambda tag: tag.name == "tr" and "Date:" in tag.text)
     field_value = field_title.find_all('td')[1]
 
-    return datetime.strptime(field_value.text.strip(), "%d/%m/%Y")
+    return datetime.strptime(field_value.text.strip().strip('\x01'), "%d/%m/%Y") # remove weird \x01
 
 
 def getVersion(soup):
     field_title = soup.find(lambda tag: tag.name == "tr" and "Version:" in tag.text)
     field_value = field_title.find_all('td')[1]
-    return field_value.text.strip()
+    return field_value.text.strip().strip('\x01') # remove weird \x01
 
 
 def build_message_types():

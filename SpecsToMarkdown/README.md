@@ -29,10 +29,10 @@ Alternatively, if you've already unarchived the DDNEA zip file and used LibreOff
 .docx file into HTML, you can run the following scripts individually. 
 
 | python script                                    | DDNEA                                                     | HTML                |
-|--------------------------------------------------| --------------------------------------------------------- | ------------------- |
+|--------------------------------------------------|-----------------------------------------------------------| ------------------- |
 | messagetypes.py <br> rules.py <br> conditions.py | SDEV-EMCS-P4-DDNEA_APP_D_TECHNICAL_MESSAGE_STRUCTURE.docx | q2.html             |
-| codelists.py                                     | SDEV-EMCS-P4-DDNEA_APP_B_CODELISTS                        | codelists.html      |
-| business_rules.py                                | SDEV-EMCS-P4-DDNEA_APP_J_BUSINESS_RULES_CATALOGUE         | business-rules.html |
+| codelists.py                                     | SDEV-EMCS-P4-DDNEA_APP_B_CODELISTS.docx                   | codelists.html      |
+| business_rules.py                                | SDEV-EMCS-P4-DDNEA_APP_J_BUSINESS_RULES_CATALOGUE.docx    | business-rules.html |
 
 
 ## Build message type
