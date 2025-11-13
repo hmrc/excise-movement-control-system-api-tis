@@ -1,0 +1,45 @@
+<%
+phases = ['4.1', '4.2']
+
+links = [
+  {text: 'Message types', filename: 'messagetypes.html'},
+  {text: 'Technical Codelists', filename: 'technical-codelists.html'},
+  {text: 'Business Codelists', filename: 'business-codelists.html'},
+  {text: 'Data Item Formats', filename: 'data-item-formats.html'},
+  {text: 'Process Flows', filename: 'process_flows.html'},
+  {text: 'Validation Rules', filename: 'validation-rules.html'},
+  {text: 'Business Rules', filename: 'business-rules.html'},
+  {text: 'Conditions', filename: 'conditions.html'},
+  {text: 'Rules', filename: 'rules.html'},
+]
+%>
+
+<% content_for :sidebar, flush: true do %>
+  <ul>
+    <!--
+    <li>
+      <#%= link_to 'EMCS technical interface specification', '/', :relative => false %#>
+      <ul>
+        <%= link_to 'Document summary', '/#document-summary', :relative => false %>
+        <%= link_to 'Introduction', '/#introduction', :relative => false %>
+        <%= link_to 'Current technical specifications', '/#current-technical-specifications', :relative => false %>
+        <%= link_to 'New technical specifications', '/#new-technical-specifications', :relative => false %>
+        <%= link_to 'Related documentation', '/#related-documentation', :relative => false %>
+        <%= link_to 'Changelog', '/#changelog', :relative => false %>
+      </ul>
+    </li>
+    -->
+  <% phases.each do |phase| %>
+    <li>
+    <%= link_to "Phase #{phase}", "/documentation/phase-#{phase}/index.html", :relative => false %>
+      <ul>
+      <% links.each do |link| %>
+        <li>
+        <%= link_to link[:text], "/documentation/phase-#{phase}/#{link[:filename]}", :relative => false %>
+        </li>
+      <% end %>
+      </ul>
+    </li>
+  <% end %>
+  </ul>
+<% end %>

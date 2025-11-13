@@ -26,7 +26,7 @@ tracking_consent_frontend:
   gtm_container: d
 
 # Enable multipage navigation in the sidebar
-multipage_nav: true
+multipage_nav: false
 
 # Enable collapsible navigation in the sidebar
 collapsible_nav: true

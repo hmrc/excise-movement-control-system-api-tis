@@ -3,10 +3,13 @@ title: EMCS API business rules
 weight: 7
 description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
 ---
-<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? "phase-" }.first %>
+<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? 'phase-' }.first %>
+
+<%= partial 'documentation/partials/google_tag_manager_js' %>
+<%= partial 'documentation/partials/nav' %>
 
 #Business Rules
-<%= partial "documentation/partials/google_tag_manager_js" %>
+
 <%= partial "documentation/#{phase_dir}/partials/BR001" %>
 <%= partial "documentation/#{phase_dir}/partials/BR002" %>
 <%= partial "documentation/#{phase_dir}/partials/BR003" %>

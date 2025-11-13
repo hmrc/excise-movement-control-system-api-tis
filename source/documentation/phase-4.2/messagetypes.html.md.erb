@@ -3,10 +3,15 @@ title: EMCS API message types
 weight: 4
 description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
 ---
-<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? "phase-" }.first %>
+<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? 'phase-' }.first %>
+
+<%= partial 'documentation/partials/google_tag_manager_js' %>
+<%= partial 'documentation/partials/nav' %>
 
 #Message types
+
 Based on document version 3.14 and issue date May 16, 2023
+
 <%= partial "documentation/#{phase_dir}/partials/messagetypeintro" %>
 <%= partial "documentation/#{phase_dir}/partials/IE704" %>
 <%= partial "documentation/#{phase_dir}/partials/IE801" %>

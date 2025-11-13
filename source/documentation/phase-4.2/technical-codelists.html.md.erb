@@ -3,10 +3,13 @@ title: EMCS API technical codelists
 weight: 7
 description: Software developers, designers, product owners or business analysts. Integrate your software with the EMCS service
 ---
-<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? "phase-" }.first %>
+<% phase_dir = __FILE__.split(File::SEPARATOR).filter { |segment| segment.start_with? 'phase-' }.first %>
+
+<%= partial "documentation/partials/google_tag_manager_js" %>
+<%= partial 'documentation/partials/nav' %>
 
 #Technical Codelists
-<%= partial "documentation/partials/google_tag_manager_js" %>
+
 <%= partial "documentation/#{phase_dir}/partials/TC04 Common Request Type" %>
 <%= partial "documentation/#{phase_dir}/partials/TC05 Request Message Name" %>
 <%= partial "documentation/#{phase_dir}/partials/TC06 Primary Criterion Type Code" %>
