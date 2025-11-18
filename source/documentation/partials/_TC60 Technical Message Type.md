@@ -174,7 +174,7 @@
    IE839
   </td>
   <td>
-   REJECTION OF E-AD FOR EXPORT
+   CUSTOMS REJECTION OF E-AD
   </td>
   <td>
   </td>
