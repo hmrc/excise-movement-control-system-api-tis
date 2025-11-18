@@ -162,7 +162,7 @@
    X12
   </td>
   <td>
-   Accepted for Export
+   reserved
   </td>
   <td>
   </td>

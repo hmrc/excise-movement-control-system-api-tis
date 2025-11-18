@@ -42,7 +42,7 @@
    IE803
   </td>
   <td>
-   NOTIFICATION OF DIVERTED E-AD
+   NOTIFICATION OF DIVERTED E-AD/E-SAD
   </td>
   <td>
   </td>
