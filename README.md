@@ -1,5 +1,15 @@
 # Excise Movement Control System  - Technical Interface Specification
 
+In the period before a new version of EMCS is released, third-party developers
+need to be able to reference both the current version and the upcoming version
+at the same time. Because of this we have documentation repos with the version
+included in the repo name as a suffix (eg
+`excise-movement-control-system-api-tis-4-2`). This repo (which doesn't have a
+version number in its name) exists so we can provide stable links to pages in
+the documentation which don't need to be updated every time a new version is
+released. It also means we don't break links that end users have already
+bookmarked. The logic for this redirection behaviour is in [config.rb](config.rb)
+
 ## Getting started
 
 To preview or build the website, we need to use the terminal.
@@ -12,34 +22,6 @@ In the application folder type the following to install the required gems:
 ```
 bundle install
 ```
-
-## Making changes
-
-To make changes edit the source files in the `source` folder.
-
-### Single page output
-
-Although a single page of HTML is generated the markdown is spread across
-multiple files to make it easier to manage. They can be found in
-`source/documentation`.
-
-A new markdown file isn't automatically included in the generated output. If we
-add a new markdown file at the location `source/documentation/agile/scrum.md`,
-the following snippet in `source/index.html.md.erb`, includes it in the
-generated output.
-
-```
-<%= partial 'documentation/agile/scrum' %>
-```
-
-Including files manually like this lets us specify the position they appear in
-the page.
-
-### Multiple pages
-
-To add a completely new page, create a file with a `.html.md` extension in the `/source` directory.
-
-For example, `source/about.html.md` will be accessible on <http://localhost:4567/about.html>.
 
 ## Preview
 
